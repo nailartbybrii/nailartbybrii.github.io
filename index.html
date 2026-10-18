@@ -1,0 +1,1454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<base target="_top">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#2e1b12">
+<title>Book Nails · Availability</title>
+<meta name="description" content="See open times and book your nail appointment in seconds.">
+<meta property="og:title" content="Book your nail appointment">
+<meta property="og:description" content="Live availability. Tap a time to book.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%232c1911'/%3E%3Cpath d='M32 12c-7 0-11 6-11 14v22a11 11 0 0 0 22 0V26c0-8-4-14-11-14z' fill='%23ebe2d3'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --page:#e8e3d9; --paper:#f2eee5; --paper-2:#ece6da; --cream:#f7f3ea;
+  --ink:#38201a; --ink-2:#5a4236; --muted:#8a7669; --faint:#a8978b;
+  --line:#b7a498; --line-2:#d7cbbf;
+  --choc:#2c1911; --choc-2:#4a2c1d; --tan:#c9b39f; --rose:#b98a7c;
+  --serif:'Cormorant Garamond','Cormorant',Georgia,'Times New Roman',serif;
+  --sans:'Montserrat',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  --w:min(calc(100vw - 20px), 540px);
+  --ease:cubic-bezier(.2,.8,.2,1);
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0}
+body{
+  background:var(--page);
+  background-image:radial-gradient(120% 70% at 50% 0%, #f1ece3 0%, var(--page) 55%, #ddd6ca 100%);
+  color:var(--ink); font-family:var(--sans); min-height:100vh; overflow-x:hidden;
+  -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
+}
+body::before{ /* paper grain */
+  content:"";position:fixed;inset:0;pointer-events:none;z-index:50;opacity:.28;mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .35 0 0 0 0 .25 0 0 0 0 .18 0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
+a{color:inherit}
+input,textarea,select{font:inherit;color:inherit}
+[hidden]{display:none!important}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* ---------- top brand line ---------- */
+.brand{width:var(--w);margin:18px auto 12px;display:flex;align-items:center;justify-content:space-between;gap:12px;
+  opacity:0;animation:fadeUp .9s var(--ease) .05s forwards}
+.brand .name{font-family:var(--serif);font-style:italic;font-size:21px;letter-spacing:.01em;color:var(--ink)}
+.live{display:inline-flex;align-items:center;gap:8px;font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--muted);
+  padding:7px 12px 7px 11px;border:1px solid var(--line-2);border-radius:999px;background:rgba(247,243,234,.6);backdrop-filter:blur(6px)}
+.live i{width:7px;height:7px;border-radius:50%;background:#7c9a6d;position:relative;flex:none}
+.live i::after{content:"";position:absolute;inset:-4px;border-radius:50%;border:1px solid #7c9a6d;animation:ping 2.2s ease-out infinite}
+.live.off i{background:#b9786a}.live.off i::after{border-color:#b9786a}
+
+/* ---------- the arch ---------- */
+.frame{
+  width:var(--w);margin:0 auto;padding:11px;position:relative;
+  border-radius:calc(var(--w) / 2) calc(var(--w) / 2) 24px 24px;
+  background-color:var(--choc);
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12'%3E%3Cg stroke='%236b4330' stroke-width='1.3' opacity='.85'%3E%3Cpath d='M0 3 L3 0 M3 6 L6 3 M6 3 L9 6 M9 0 L12 3 M0 9 L3 6 M3 12 L6 9 M6 9 L9 12 M9 6 L12 9'/%3E%3C/g%3E%3C/svg%3E");
+  box-shadow:0 1px 0 rgba(255,255,255,.4) inset, 0 30px 60px -28px rgba(44,25,17,.55), 0 12px 24px -12px rgba(44,25,17,.35);
+  opacity:0;transform:translateY(26px) scale(.985);animation:rise 1.1s var(--ease) .12s forwards;
+}
+.arch{
+  position:relative;overflow:hidden;background:var(--paper);
+  border-radius:calc((var(--w) - 22px) / 2) calc((var(--w) - 22px) / 2) 14px 14px;
+  background-image:radial-gradient(90% 40% at 50% 0%, rgba(255,255,255,.55), transparent 70%);
+  box-shadow:inset 0 0 0 1px rgba(44,25,17,.25), inset 0 8px 30px rgba(44,25,17,.08);
+}
+.arch::before{ /* inner hairline arch */
+  content:"";position:absolute;inset:8px 8px 0 8px;pointer-events:none;z-index:1;
+  border:1px solid var(--line);border-bottom:0;
+  border-radius:calc((var(--w) - 38px) / 2) calc((var(--w) - 38px) / 2) 0 0;
+}
+.arch::after{ /* slow satin sheen */
+  content:"";position:absolute;top:-10%;bottom:-10%;width:40%;left:-60%;pointer-events:none;z-index:3;
+  background:linear-gradient(100deg,transparent 0%,rgba(255,255,255,.0) 30%,rgba(255,255,255,.42) 50%,rgba(255,255,255,0) 70%,transparent 100%);
+  transform:skewX(-12deg);animation:sheen 9s ease-in-out 2.2s infinite;
+}
+.arch-in{position:relative;z-index:2;padding:calc(var(--w) * .165) 0 0}
+
+.mhead{text-align:center;padding:0 22px;position:relative}
+.month{font-family:var(--serif);font-weight:500;color:var(--ink);line-height:.95;margin:0;
+  font-size:min(60px, calc((var(--w) - 118px) / (var(--len, 12) * .49)));letter-spacing:.005em;white-space:nowrap}
+.month .yr{font-size:.86em}
+.month .ch{display:inline-block;opacity:0;transform:translateY(.35em);animation:fadeUp .8s var(--ease) forwards}
+.kick{margin:14px 0 0;font-size:clamp(10px,2.8vw,13px);letter-spacing:.42em;text-transform:uppercase;color:var(--ink-2);font-weight:400;padding-left:.42em}
+.avail{margin:22px 0 0;font-family:var(--serif);font-style:italic;font-weight:500;font-size:clamp(28px,8vw,40px);color:var(--ink);line-height:1}
+.mnav{position:absolute;top:50%;transform:translateY(-10%);width:34px;height:34px;border-radius:50%;display:grid;place-items:center;
+  color:var(--ink-2);border:1px solid transparent;transition:all .3s var(--ease)}
+.mnav:hover:not(:disabled){border-color:var(--line);background:rgba(255,255,255,.5)}
+.mnav:disabled{opacity:.2;cursor:default}
+.mnav.prev{left:14px}.mnav.next{right:14px}
+.mnav svg{width:14px;height:14px}
+
+.dow{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));margin:24px 10px 10px;text-align:center;
+  font-size:clamp(9px,2.5vw,12px);letter-spacing:.14em;color:var(--ink-2);font-weight:400}
+.grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));margin:0 10px;border-top:1px solid var(--line);border-left:1px solid var(--line);position:relative}
+.grid.swap{animation:gridIn .55s var(--ease)}
+.cell{position:relative;min-height:calc(var(--w) * .135);border-right:1px solid var(--line);border-bottom:1px solid var(--line);
+  padding:6px 0 9px;min-width:0;overflow:hidden;display:flex;flex-direction:column;align-items:stretch;text-align:left;
+  transition:background-color .35s var(--ease)}
+.cell.empty{background:transparent}
+.cell.day{cursor:pointer}
+.cell.day:hover{background:rgba(255,255,255,.45)}
+.cell.sel{background:rgba(201,179,159,.22)}
+.cell .n{font-family:var(--serif);font-weight:500;font-size:clamp(17px,5.2vw,27px);line-height:1;color:var(--ink);padding-left:clamp(5px,1.6vw,10px);
+  font-feature-settings:"onum" 1, "lnum" 0;position:relative;display:inline-block;align-self:flex-start}
+.cell.today .n::after{content:"";position:absolute;left:clamp(5px,1.6vw,10px);right:-3px;bottom:-4px;height:1px;background:var(--ink)}
+.cell.custom .n::before{content:"";position:absolute;right:-7px;top:1px;width:4px;height:4px;border-radius:50%;background:var(--rose)}
+.cell.pastday .n{color:var(--faint)}
+.times{display:flex;flex-direction:column;align-items:center;margin-top:5px;gap:0}
+.t{position:relative;display:inline-block;font-family:var(--sans);font-weight:400;color:#6f5c50;white-space:nowrap;
+  font-size:clamp(7.4px,2.36vw,12px);letter-spacing:.01em;line-height:2.15;padding:0 1px;border-radius:3px;
+  transition:color .25s, transform .25s var(--ease)}
+.t.open{cursor:pointer}
+.t.open::before{content:"";position:absolute;left:10%;right:10%;bottom:.35em;height:1px;background:var(--ink);transform:scaleX(0);transition:transform .35s var(--ease)}
+.t.open:hover{color:var(--ink)}
+.t.open:hover::before{transform:scaleX(1)}
+.t.open:active{transform:scale(.94)}
+.t.booked{color:#8b7a70}
+.t.booked::after{content:"";position:absolute;left:-4px;right:-4px;top:52%;height:1.6px;background:var(--choc);border-radius:1px;transform-origin:left center}
+.t.booked.fresh::after{animation:strike .9s var(--ease) forwards;transform:scaleX(0)}
+.t.booked.fresh{animation:flash 1.6s ease}
+.t.past{opacity:.38}
+.t.picked{color:var(--cream);background:var(--choc)}
+.t .who{display:block;font-size:.82em;line-height:1.1;margin-top:-4px;color:var(--rose);letter-spacing:0;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+
+.cta{text-align:center;padding:30px 16px 26px}
+.cta .big{font-size:clamp(13px,3.9vw,19px);letter-spacing:.45em;text-transform:uppercase;color:var(--ink);font-weight:400;padding-left:.45em}
+.cta .small{margin-top:12px;font-size:11px;letter-spacing:.06em;color:var(--muted);line-height:1.7}
+.cta .small a{color:var(--ink-2);text-decoration:none;border-bottom:1px solid var(--line)}
+.legend{display:flex;justify-content:center;gap:18px;margin-top:14px;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend .s{position:relative;display:inline-block;width:18px;height:1px;background:var(--choc)}
+.legend .o{display:inline-block;width:18px;height:1px;background:linear-gradient(90deg,var(--line) 50%,transparent 50%);background-size:4px 1px}
+
+/* ---------- lace + polka strip ---------- */
+.strip{position:relative;height:calc(var(--w) * .23);min-height:92px;overflow:hidden;border-top:1px solid rgba(44,25,17,.35)}
+.polka{position:absolute;inset:0;background-color:#27150d;
+  background-image:radial-gradient(circle at center,#ebe2d3 0 calc(var(--w) * .0105),rgba(235,226,211,0) calc(var(--w) * .0115));
+  background-size:calc(var(--w) * .062) calc(var(--w) * .062);background-position:calc(var(--w) * .01) calc(var(--w) * .018);
+  box-shadow:inset 0 10px 18px -8px rgba(0,0,0,.6)}
+.lace{position:absolute;left:-2%;top:-6%;height:112%;width:62%;filter:drop-shadow(2px 3px 3px rgba(0,0,0,.35))}
+
+/* ---------- panels below ---------- */
+.panel{width:var(--w);margin:16px auto 0;background:var(--paper);border-radius:22px;padding:30px 24px 28px;position:relative;
+  box-shadow:0 0 0 1px rgba(44,25,17,.14), 0 20px 40px -26px rgba(44,25,17,.45)}
+.panel::before{content:"";position:absolute;inset:7px;border:1px solid var(--line-2);border-radius:16px;pointer-events:none}
+.panel > *{position:relative}
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .9s var(--ease), transform .9s var(--ease)}
+.reveal.in{opacity:1;transform:none}
+.p-kick{font-size:10.5px;letter-spacing:.38em;text-transform:uppercase;color:var(--muted);text-align:center}
+.p-title{font-family:var(--serif);font-style:italic;font-weight:500;font-size:34px;text-align:center;margin:6px 0 20px;line-height:1.05}
+.menu-row{display:flex;align-items:baseline;gap:10px;padding:9px 2px;font-size:14px}
+.menu-row .nm{font-family:var(--serif);font-size:20px;font-weight:500}
+.menu-row .dots{flex:1;border-bottom:1px dotted var(--line);transform:translateY(-4px)}
+.menu-row .pr{font-size:12.5px;letter-spacing:.1em;color:var(--ink-2)}
+.note{font-size:12.5px;line-height:1.75;color:var(--ink-2);text-align:center;margin:18px 4px 0}
+.policies{list-style:none;margin:0;padding:0;counter-reset:p}
+.policies li{counter-increment:p;display:grid;grid-template-columns:34px 1fr;gap:6px;padding:11px 0;border-bottom:1px solid var(--line-2);font-size:13.5px;line-height:1.6;color:var(--ink-2)}
+.policies li:last-child{border-bottom:0}
+.policies li::before{content:counter(p, lower-roman) ".";font-family:var(--serif);font-style:italic;font-size:19px;color:var(--rose);line-height:1.2}
+
+/* ---------- buttons & fields ---------- */
+.btn{position:relative;overflow:hidden;display:inline-flex;align-items:center;justify-content:center;gap:10px;
+  min-height:48px;padding:0 20px;border-radius:999px;font-size:11px;letter-spacing:.3em;text-transform:uppercase;font-weight:500;
+  text-decoration:none;transition:transform .25s var(--ease), background .3s, box-shadow .3s, opacity .3s;user-select:none}
+.btn:active{transform:scale(.97)}
+.btn.dark{background:var(--choc);color:var(--cream);box-shadow:0 10px 22px -12px rgba(44,25,17,.8)}
+.btn.dark::after{content:"";position:absolute;top:0;bottom:0;width:40%;left:-60%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.22),transparent);transform:skewX(-18deg);transition:left .8s var(--ease)}
+.btn.dark:hover::after{left:120%}
+.btn.line{border:1px solid var(--line);color:var(--ink)}
+.btn.line:hover{background:rgba(255,255,255,.5)}
+.btn.sm{min-height:38px;font-size:10px;padding:0 14px;letter-spacing:.24em}
+.btn.block{width:100%}
+.btn[disabled]{opacity:.45;pointer-events:none}
+.btn .spin{width:14px;height:14px;border-radius:50%;border:1.5px solid currentColor;border-right-color:transparent;animation:spin .8s linear infinite}
+.field{display:block;margin:0 0 16px}
+.field .lb{display:block;font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+.field input,.field textarea,.field select{width:100%;border:0;border-bottom:1px solid var(--line);background:transparent;padding:10px 2px;font-size:16px;outline:none;border-radius:0;transition:border-color .3s}
+.field input:focus,.field textarea:focus,.field select:focus{border-bottom-color:var(--choc)}
+.field textarea{resize:vertical;min-height:64px;line-height:1.5}
+.hp{position:absolute;left:-9999px;opacity:0;height:0;width:0}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+
+/* ---------- bottom sheet ---------- */
+.scrim{position:fixed;inset:0;background:rgba(36,20,13,.42);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);z-index:60;opacity:0;pointer-events:none;transition:opacity .35s var(--ease)}
+.scrim.on{opacity:1;pointer-events:auto}
+.sheet{position:fixed;left:50%;bottom:0;z-index:61;width:min(100vw, 560px);max-height:90vh;max-height:90dvh;overflow:auto;overscroll-behavior:contain;
+  transform:translate(-50%,105%);visibility:hidden;transition:transform .5s var(--ease), visibility 0s linear .5s;background:var(--paper);border-radius:28px 28px 0 0;
+  box-shadow:0 -20px 50px -20px rgba(44,25,17,.5);padding:10px 22px calc(26px + env(safe-area-inset-bottom))}
+.sheet.on{transform:translate(-50%,0);visibility:visible;transition:transform .5s var(--ease), visibility 0s}
+.sheet .grab{width:42px;height:4px;border-radius:9px;background:var(--line-2);margin:4px auto 16px}
+.sheet .x{position:absolute;right:14px;top:14px;width:38px;height:38px;border-radius:50%;display:grid;place-items:center;color:var(--ink-2);background:rgba(255,255,255,.55);border:1px solid var(--line-2)}
+.sh-kick{font-size:10.5px;letter-spacing:.38em;text-transform:uppercase;color:var(--muted);text-align:center;margin-top:6px}
+.sh-title{font-family:var(--serif);font-weight:500;font-size:36px;text-align:center;margin:4px 0 18px;line-height:1.05}
+.sh-title em{font-weight:500}
+.pills{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:6px}
+.pill{position:relative;min-height:52px;border-radius:999px;border:1px solid var(--line);font-size:13px;letter-spacing:.16em;color:var(--ink);
+  transition:all .3s var(--ease);background:rgba(255,255,255,.35)}
+.pill:hover:not([disabled]){border-color:var(--choc)}
+.pill.on{background:var(--choc);color:var(--cream);border-color:var(--choc);box-shadow:0 10px 20px -12px rgba(44,25,17,.8)}
+.pill[disabled]{cursor:default;color:var(--faint);background:transparent;border-style:dashed;border-color:var(--line-2)}
+.pill.booked span{position:relative}
+.pill.booked span::after{content:"";position:absolute;left:-6px;right:-6px;top:50%;height:1.5px;background:var(--ink-2)}
+.pill small{display:block;font-size:9px;letter-spacing:.24em;margin-top:2px;text-transform:uppercase}
+.empty-msg{text-align:center;color:var(--muted);font-size:14px;line-height:1.7;padding:6px 10px 16px}
+.form-wrap{overflow:hidden;max-height:0;opacity:0;transition:max-height .6s var(--ease), opacity .5s var(--ease)}
+.form-wrap.on{max-height:1400px;opacity:1}
+.divider{display:flex;align-items:center;gap:12px;margin:18px 0 16px;color:var(--muted);font-size:10px;letter-spacing:.34em;text-transform:uppercase}
+.divider::before,.divider::after{content:"";flex:1;height:1px;background:var(--line-2)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:18px}
+.chip{border:1px solid var(--line);border-radius:999px;padding:10px 14px;font-size:12.5px;display:inline-flex;gap:8px;align-items:baseline;transition:all .25s var(--ease);background:rgba(255,255,255,.3)}
+.chip b{font-weight:500;font-size:11px;letter-spacing:.06em;color:var(--muted)}
+.chip.on{background:var(--choc);color:var(--cream);border-color:var(--choc)}
+.chip.on b{color:var(--tan)}
+.fine{font-size:11.5px;line-height:1.65;color:var(--muted);text-align:center;margin:12px 6px 0}
+
+/* confirmation */
+.done{text-align:center;padding:4px 0 4px}
+.check{width:78px;height:78px;margin:6px auto 8px}
+.check circle{fill:none;stroke:var(--choc);stroke-width:1.5;stroke-dasharray:240;stroke-dashoffset:240;animation:draw 1s var(--ease) forwards}
+.check path{fill:none;stroke:var(--choc);stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:60;stroke-dashoffset:60;animation:draw .6s var(--ease) .65s forwards}
+.done h3{font-family:var(--serif);font-style:italic;font-weight:500;font-size:40px;margin:0;line-height:1}
+.ticket{margin:20px 0 16px;border:1px solid var(--line);border-radius:18px;padding:6px 18px;text-align:left;background:rgba(255,255,255,.4);position:relative}
+.ticket .r{display:flex;justify-content:space-between;gap:12px;padding:11px 0;border-bottom:1px dashed var(--line-2);font-size:13.5px}
+.ticket .r:last-child{border-bottom:0}
+.ticket .r span:first-child{font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted);padding-top:3px}
+.ticket .code{font-family:var(--serif);font-size:24px;letter-spacing:.24em;font-weight:600}
+.stack{display:grid;gap:10px}
+
+/* toast */
+.toast{position:fixed;left:50%;top:18px;transform:translate(-50%,-220%);visibility:hidden;z-index:80;max-width:calc(100vw - 32px);
+  background:var(--choc);color:var(--cream);padding:13px 20px;border-radius:14px;font-size:13px;line-height:1.5;letter-spacing:.02em;
+  box-shadow:0 18px 40px -18px rgba(0,0,0,.6);transition:transform .5s var(--ease)}
+.toast.on{transform:translate(-50%,0);visibility:visible}
+
+/* confetti */
+.dot-fx{position:fixed;z-index:70;border-radius:50%;pointer-events:none;will-change:transform,opacity}
+
+footer{width:var(--w);margin:26px auto 0;padding:10px 0 calc(40px + env(safe-area-inset-bottom));text-align:center}
+footer .fn{font-family:var(--serif);font-style:italic;font-size:24px}
+footer .ig{display:inline-block;margin-top:6px;font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--ink-2);text-decoration:none;border-bottom:1px solid var(--line);padding-bottom:3px}
+footer .own{display:block;margin-top:22px;font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--faint);text-decoration:none}
+
+/* ---------- owner ---------- */
+.a-top{width:var(--w);margin:18px auto 12px;display:flex;justify-content:space-between;align-items:center}
+.a-top .t1{font-family:var(--serif);font-style:italic;font-size:24px}
+.tabs{width:var(--w);margin:0 auto 14px;display:grid;grid-template-columns:repeat(3,1fr);background:rgba(255,255,255,.4);border:1px solid var(--line-2);border-radius:999px;padding:4px}
+.tab{min-height:40px;border-radius:999px;font-size:10px;letter-spacing:.26em;text-transform:uppercase;color:var(--ink-2);transition:all .3s var(--ease)}
+.tab.on{background:var(--choc);color:var(--cream)}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;width:var(--w);margin:0 auto 14px}
+.stat{background:var(--paper);border-radius:16px;padding:14px 10px;text-align:center;box-shadow:0 0 0 1px rgba(44,25,17,.1)}
+.stat b{display:block;font-family:var(--serif);font-size:30px;font-weight:500;line-height:1}
+.stat span{font-size:9px;letter-spacing:.24em;text-transform:uppercase;color:var(--muted)}
+.appt{border:1px solid var(--line-2);border-radius:16px;padding:14px 16px;margin-bottom:10px;background:rgba(255,255,255,.35)}
+.appt .h{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.appt .tm{font-family:var(--serif);font-size:22px;font-weight:500}
+.appt .nm{font-size:14px;font-weight:500;margin-top:2px}
+.appt .meta{font-size:12.5px;color:var(--ink-2);line-height:1.7;margin-top:4px;word-break:break-word}
+.appt .meta a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--line)}
+.appt .acts{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.badge{font-size:9px;letter-spacing:.2em;text-transform:uppercase;padding:5px 9px;border-radius:999px;border:1px solid var(--line);white-space:nowrap}
+.badge.Confirmed{background:#e7eee0;border-color:#b8c8a8;color:#4c6340}
+.badge.Completed{background:#ece6da;color:var(--ink-2)}
+.badge.Cancelled,.badge.No-show{background:#f3e3de;border-color:#dfb9ae;color:#8a4b3c}
+.appt.dim{opacity:.55}
+.day-h{font-size:10.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--muted);margin:22px 2px 10px}
+.open-slot{display:flex;justify-content:space-between;align-items:center;border:1px dashed var(--line);border-radius:16px;padding:10px 12px 10px 16px;margin-bottom:10px}
+.open-slot .tm{font-family:var(--serif);font-size:21px}
+.wk{display:grid;grid-template-columns:52px 1fr;gap:10px;align-items:start;padding:12px 0;border-bottom:1px solid var(--line-2)}
+.wk .d{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-2);padding-top:9px}
+.tchips{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.tchip{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);border-radius:999px;padding:6px 6px 6px 12px;font-size:12px;background:rgba(255,255,255,.4)}
+.tchip button{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;color:var(--muted);font-size:14px;line-height:1}
+.tchip button:hover{background:var(--line-2);color:var(--ink)}
+.addt{display:inline-flex;gap:6px;align-items:center}
+.addt input{border:1px solid var(--line);border-radius:999px;padding:6px 10px;font-size:13px;background:transparent;max-width:120px}
+.addt button{width:32px;height:32px;border-radius:50%;border:1px solid var(--line);font-size:17px;line-height:1}
+.svc-row{display:grid;grid-template-columns:1fr 92px 34px;gap:8px;align-items:end;margin-bottom:6px}
+.svc-row .field{margin:0}
+.svc-row .rm{height:40px;color:var(--muted);font-size:18px}
+.sec{margin:26px 0 8px;font-family:var(--serif);font-style:italic;font-size:26px}
+.sec:first-child{margin-top:0}
+.chk{display:flex;gap:12px;align-items:center;font-size:14px;margin:6px 0 14px}
+.chk input{width:20px;height:20px;accent-color:var(--choc)}
+.savebar{position:sticky;bottom:12px;z-index:5;margin-top:22px}
+.login{width:min(calc(100vw - 32px), 380px);margin:12vh auto 0;text-align:center}
+.login .field input{text-align:center;font-size:28px;letter-spacing:.5em;font-family:var(--serif)}
+.linkish{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-2);text-decoration:none;border-bottom:1px solid var(--line);padding-bottom:2px}
+
+/* ---------- loading ---------- */
+.loading-msg{grid-column:1 / -1;padding:60px 10px;text-align:center;font-family:var(--serif);font-style:italic;font-size:22px;color:var(--muted);border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
+.loading-msg .dots i{font-style:normal;animation:twinkle .9s ease-in-out infinite alternate}
+.loading-msg .dots i:nth-child(2){animation-delay:.3s}.loading-msg .dots i:nth-child(3){animation-delay:.6s}
+
+/* ---------- multi-service total ---------- */
+.svc-total{display:flex;justify-content:space-between;align-items:baseline;margin:-6px 2px 18px;padding:10px 14px;border:1px dashed var(--line);border-radius:14px;font-size:12px;letter-spacing:.06em;color:var(--muted);transition:all .3s var(--ease)}
+.svc-total b{font-family:var(--serif);font-size:22px;font-weight:600;color:var(--ink);letter-spacing:.02em}
+.svc-total.bump b{animation:bump .4s var(--ease)}
+.chip .tick{display:inline-grid;place-items:center;width:15px;height:15px;border-radius:50%;border:1px solid var(--line);font-size:9px;line-height:1;margin-right:-2px;align-self:center;transition:all .25s}
+.chip.on .tick{background:var(--cream);color:var(--choc);border-color:var(--cream)}
+.menu-hint{text-align:center;font-size:11px;letter-spacing:.08em;color:var(--muted);margin:-8px 0 14px}
+@keyframes bump{0%{transform:scale(1)}40%{transform:scale(1.12)}100%{transform:scale(1)}}
+
+/* ---------- seasonal themes ---------- */
+#client{position:relative;z-index:1}
+#client .frame{z-index:2}
+#decor{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.fdecor{position:absolute;inset:0;pointer-events:none;z-index:6}
+#decor > *, .fdecor > *{position:absolute}
+.fdecor svg, #decor svg{display:block;width:100%;height:auto;overflow:visible}
+.s-in{animation:seasonIn 1.1s var(--ease) both}
+.fall{top:0;left:0;will-change:transform;animation-name:fall;animation-timing-function:linear;animation-iteration-count:infinite}
+.bob{animation:bob 3.2s ease-in-out infinite}
+.sway{animation:sway 4s ease-in-out infinite alternate;transform-origin:50% 100%}
+.bat{top:0;left:0;animation:batfly linear infinite}
+.bat svg{animation:flap .32s ease-in-out infinite alternate;transform-origin:50% 40%}
+.bulb{width:7px;height:10px;margin:-5px 0 0 -3.5px;border-radius:50% 50% 45% 45%;background:currentColor;box-shadow:0 0 7px 2px currentColor;animation:twinkle 1.6s ease-in-out infinite alternate}
+.wire{left:0;top:0}
+body[data-season="oct"]{background-image:radial-gradient(120% 70% at 50% 0%, #f4e7d6 0%, #e9dfd2 55%, #dccdbb 100%)}
+body[data-season="nov"]{background-image:radial-gradient(120% 70% at 50% 0%, #f3e8d8 0%, #e8ddcd 55%, #d9c8b2 100%)}
+body[data-season="dec"]{background-image:radial-gradient(120% 70% at 50% 0%, #f1efe9 0%, #e4e2db 55%, #d5d3ca 100%)}
+@keyframes seasonIn{from{opacity:0;transform:translateY(10px) scale(.94)}to{opacity:1;transform:none}}
+@keyframes fall{0%{transform:translate3d(var(--x0),-12vh,0) rotate(0deg)}100%{transform:translate3d(calc(var(--x0) + var(--dx)),112vh,0) rotate(var(--rot))}}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+@keyframes sway{from{transform:rotate(-3deg)}to{transform:rotate(3deg)}}
+@keyframes batfly{0%{transform:translate3d(-12vw,var(--y0),0)}50%{transform:translate3d(50vw,calc(var(--y0) - 5vh),0)}100%{transform:translate3d(112vw,calc(var(--y0) + 2vh),0)}}
+@keyframes flap{to{transform:scaleY(.5)}}
+@keyframes twinkle{from{opacity:.4}to{opacity:1}}
+
+/* ---------- motion ---------- */
+@keyframes rise{to{opacity:1;transform:none}}
+@keyframes fadeUp{to{opacity:1;transform:none}}
+@keyframes ping{0%{transform:scale(.6);opacity:.9}100%{transform:scale(2.1);opacity:0}}
+@keyframes sheen{0%{left:-60%}28%{left:130%}100%{left:130%}}
+@keyframes strike{to{transform:scaleX(1)}}
+@keyframes flash{0%{background:rgba(185,138,124,.0)}25%{background:rgba(185,138,124,.28)}100%{background:rgba(185,138,124,0)}}
+@keyframes gridIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@keyframes cellIn{from{opacity:0}to{opacity:1}}
+@keyframes draw{to{stroke-dashoffset:0}}
+@keyframes spin{to{transform:rotate(360deg)}}
+.grid.first .cell{opacity:0;animation:cellIn .6s ease forwards}
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:.001s!important;animation-delay:0s!important;transition-duration:.001s!important}
+  .arch::after{display:none}
+  .fall,.bat{display:none}
+}
+@media (max-width:360px){ .t{letter-spacing:-.02em} .grid,.dow{margin-left:8px;margin-right:8px} }
+@media (min-width:700px){
+  .brand{margin-top:34px}
+}
+</style>
+</head>
+<body>
+<div id="decor" aria-hidden="true"></div>
+
+<!-- ======================= CLIENT VIEW ======================= -->
+<div id="client" hidden>
+  <div class="brand">
+    <div class="name" id="bizName"></div>
+    <div class="live" id="live" title="This calendar updates automatically"><i></i><span id="liveTxt">Live</span></div>
+  </div>
+
+  <div class="frame">
+    <div class="fdecor" id="frameDecor" aria-hidden="true"></div>
+    <div class="arch">
+      <div class="arch-in">
+        <div class="mhead">
+          <button class="mnav prev" id="prevM" aria-label="Previous month"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M10 3 5 8l5 5"/></svg></button>
+          <button class="mnav next" id="nextM" aria-label="Next month"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="m6 3 5 5-5 5"/></svg></button>
+          <h1 class="month" id="monthTitle" aria-live="polite"></h1>
+          <p class="kick" id="subtitle">Nail Appointments</p>
+          <p class="avail">Availability</p>
+        </div>
+        <div class="dow"><span>MON</span><span>TUE</span><span>WED</span><span>THU</span><span>FRI</span><span>SAT</span><span>SUN</span></div>
+        <div class="grid first" id="grid" role="grid"></div>
+        <div class="cta">
+          <div class="big">Tap a time to book</div>
+          <div class="legend"><span><i class="s"></i>Booked</span><span><i class="o"></i>Open</span></div>
+          <div class="small" id="dmLine"></div>
+        </div>
+      </div>
+      <div class="strip" aria-hidden="true">
+        <div class="polka"></div>
+        <svg class="lace" viewBox="0 0 300 130" preserveAspectRatio="none">
+          <defs>
+            <pattern id="mesh" width="5" height="5" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+              <circle cx="2.5" cy="2.5" r="1.25" fill="#3a2217" opacity=".62"/>
+            </pattern>
+            <pattern id="flowers" width="54" height="46" patternUnits="userSpaceOnUse" patternTransform="rotate(-8)">
+              <g fill="#f4efe4" stroke="#d9cfbf" stroke-width=".6">
+                <ellipse cx="27" cy="12" rx="5.5" ry="9"/>
+                <ellipse cx="27" cy="34" rx="5.5" ry="9"/>
+                <ellipse cx="16" cy="23" rx="9" ry="5.5"/>
+                <ellipse cx="38" cy="23" rx="9" ry="5.5"/>
+                <circle cx="27" cy="23" r="4.2" fill="#e8dfd0"/>
+                <path d="M0 40 Q8 30 16 40 T32 40" fill="none" stroke="#f4efe4" stroke-width="3"/>
+                <ellipse cx="5" cy="6" rx="3" ry="5" transform="rotate(35 5 6)"/>
+                <ellipse cx="49" cy="42" rx="3" ry="5" transform="rotate(-35 49 42)"/>
+              </g>
+              <g fill="#3a2217" opacity=".5">
+                <circle cx="27" cy="12" r="1.3"/><circle cx="27" cy="34" r="1.3"/><circle cx="16" cy="23" r="1.3"/><circle cx="38" cy="23" r="1.3"/>
+              </g>
+            </pattern>
+            <clipPath id="laceClip">
+              <path d="M0 0 H232 C 244 6 236 16 248 20 C 262 25 250 36 262 42 C 275 48 262 58 272 64 C 284 71 270 80 280 88 C 290 96 276 104 284 112 C 290 118 282 126 286 130 H0 Z"/>
+            </clipPath>
+          </defs>
+          <g clip-path="url(#laceClip)">
+            <rect width="300" height="130" fill="#efe8db"/>
+            <rect width="300" height="130" fill="url(#mesh)"/>
+            <rect width="300" height="130" fill="url(#flowers)"/>
+          </g>
+          <path d="M232 0 C 244 6 236 16 248 20 C 262 25 250 36 262 42 C 275 48 262 58 272 64 C 284 71 270 80 280 88 C 290 96 276 104 284 112 C 290 118 282 126 286 130" fill="none" stroke="#f4efe4" stroke-width="2.4" stroke-dasharray="1 3.2" stroke-linecap="round"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <section class="panel reveal" id="menuPanel">
+    <div class="p-kick">The Menu</div>
+    <div class="p-title">Services &amp; Pricing</div>
+    <p class="menu-hint">Mix and match. Pick as many as you like when you book.</p>
+    <div id="menuList"></div>
+  </section>
+
+  <section class="panel reveal" id="polPanel">
+    <div class="p-kick">Before You Come</div>
+    <div class="p-title">Good to Know</div>
+    <ul class="policies" id="policyList"></ul>
+    <p class="note" id="locLine"></p>
+  </section>
+
+  <section class="panel reveal" id="managePanel">
+    <div class="p-kick">Already Booked?</div>
+    <div class="p-title">Find My Appointment</div>
+    <form id="findForm" autocomplete="off">
+      <div class="row2">
+        <label class="field"><span class="lb">Booking code</span><input id="fCode" maxlength="8" autocapitalize="characters" placeholder="ABC123" required></label>
+        <label class="field"><span class="lb">Instagram</span><input id="fIg" autocapitalize="none" autocorrect="off" spellcheck="false" maxlength="40" placeholder="@yourhandle" required></label>
+      </div>
+      <button class="btn line block" type="submit">Look it up</button>
+    </form>
+    <div id="findResult"></div>
+  </section>
+
+  <footer class="reveal">
+    <div class="fn" id="footName"></div>
+    <a class="ig" id="footIg" target="_blank" rel="noopener"></a>
+    <a class="own" id="ownerLink">Owner login</a>
+  </footer>
+</div>
+
+<!-- ======================= OWNER VIEW ======================= -->
+<div id="admin" hidden>
+  <div id="loginView" class="login">
+    <div class="p-kick">Owner</div>
+    <div class="p-title" style="margin-bottom:26px">Welcome back</div>
+    <form id="loginForm">
+      <label class="field"><span class="lb">Enter your PIN</span><input id="pinIn" type="password" inputmode="numeric" autocomplete="current-password" maxlength="10" required></label>
+      <button class="btn dark block" type="submit" id="loginBtn">Open dashboard</button>
+    </form>
+    <p class="fine">Your PIN was shown when you ran setup. You can change it in Settings.</p>
+    <p style="margin-top:28px"><a class="linkish" id="backToSite">Back to booking page</a></p>
+  </div>
+
+  <div id="dash" hidden>
+    <div class="a-top">
+      <div class="t1" id="aName">Owner</div>
+      <div class="live" id="aLive"><i></i><span>Live</span></div>
+    </div>
+    <div class="stats">
+      <div class="stat"><b id="stToday">0</b><span>Today</span></div>
+      <div class="stat"><b id="stWeek">0</b><span>Next 7 days</span></div>
+      <div class="stat"><b id="stOpen">0</b><span>Open slots</span></div>
+    </div>
+    <div class="tabs" role="tablist">
+      <button class="tab on" data-tab="cal">Calendar</button>
+      <button class="tab" data-tab="list">Bookings</button>
+      <button class="tab" data-tab="set">Settings</button>
+    </div>
+
+    <div data-pane="cal">
+      <div class="frame" style="animation-delay:0s">
+        <div class="arch">
+          <div class="arch-in">
+            <div class="mhead">
+              <button class="mnav prev" id="aPrev" aria-label="Previous month"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M10 3 5 8l5 5"/></svg></button>
+              <button class="mnav next" id="aNext" aria-label="Next month"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="m6 3 5 5-5 5"/></svg></button>
+              <h1 class="month" id="aMonth"></h1>
+              <p class="kick">Tap any day to edit</p>
+            </div>
+            <div class="dow"><span>MON</span><span>TUE</span><span>WED</span><span>THU</span><span>FRI</span><span>SAT</span><span>SUN</span></div>
+            <div class="grid" id="aGrid"></div>
+            <div class="cta" style="padding-bottom:30px">
+              <div class="small">Crossed out = booked (client's name underneath). A small dot by the date = custom times for that day.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div data-pane="list" hidden>
+      <section class="panel" style="margin-top:0">
+        <div class="row2" style="margin-bottom:6px">
+          <button class="btn line sm" id="showPastBtn">Show past</button>
+          <button class="btn dark sm" id="addApptBtn">+ Add booking</button>
+        </div>
+        <div id="apptList"></div>
+      </section>
+    </div>
+
+    <div data-pane="set" hidden>
+      <section class="panel" style="margin-top:0" id="setPanel"></section>
+    </div>
+    <div style="height:40px"></div>
+  </div>
+</div>
+
+<div class="scrim" id="scrim"></div>
+<div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="shTitle">
+  <div class="grab"></div>
+  <button class="x" id="shClose" aria-label="Close"><svg width="14" height="14" viewBox="0 0 14 14" stroke="currentColor" stroke-width="1.5"><path d="M2 2l10 10M12 2 2 12"/></svg></button>
+  <div id="shBody"></div>
+</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script type="application/json" id="boot">{}</script>
+<script>window.NAIL_CONFIG = { api: "https://script.google.com/macros/s/AKfycbwLqi1AocLtZp4w4rxYNe1lRP8tmEAp4WJm4Vhn8P84osJyPlkSF5LoCpDUc7zrWqjt/exec" };</script>
+<script>
+(function(){
+'use strict';
+var BOOT = {};
+try { BOOT = JSON.parse(document.getElementById('boot').textContent); } catch (e) { BOOT = {}; }
+/* Preview mode: opened outside Google (file preview, local disk). Show sample data so the design is visible. */
+var IN_GAS = typeof google !== 'undefined' && google.script && google.script.run;
+var API_URL = (window.NAIL_CONFIG && window.NAIL_CONFIG.api) || '';
+var DEMO = !IN_GAS && !API_URL;
+if (!IN_GAS) BOOT = { mode: /[?&]admin=1/.test(location.search) ? 'admin' : 'client', appUrl: API_URL ? location.origin + location.pathname : '', data: DEMO ? demoData() : readCache() };
+function readCache(){
+  try { var c = JSON.parse(localStorage.getItem('nail_public_cache') || 'null'); if (c && Date.now() - c.t < 3 * 864e5) return c.d; } catch (e) {}
+  return null;
+}
+function writeCache(d){ try { localStorage.setItem('nail_public_cache', JSON.stringify({ t: Date.now(), d: d })); } catch (e) {} }
+function demoData(){
+  function p2(n){ return (n < 10 ? '0' : '') + n; }
+  var d = new Date(), today = d.getFullYear() + '-' + p2(d.getMonth() + 1) + '-' + p2(d.getDate());
+  var booked = [], base = Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()) / 864e5;
+  [2, 3, 5, 9, 10, 16].forEach(function(k, i){
+    var x = new Date((base + k) * 864e5), w = x.getUTCDay();
+    var ymd = x.getUTCFullYear() + '-' + p2(x.getUTCMonth() + 1) + '-' + p2(x.getUTCDate());
+    booked.push({ date: ymd, time: (w === 0 || w === 6) ? ['09:00', '15:00', '12:00'][i % 3] : '18:00' });
+  });
+  return {
+    now: { date: today, min: d.getHours() * 60 + d.getMinutes() }, booked: booked, days: {},
+    settings: { businessName: 'Nails by Your Name', subtitle: 'Nail Appointments', instagram: 'yourhandle',
+      location: 'Near GCU · Phoenix, AZ', locationNote: 'Exact address is sent after you book.', timezone: 'America/Phoenix',
+      weeklySlots: { 0: ['09:00','12:00','15:00','18:30'], 1: ['18:00'], 2: ['18:00'], 3: ['18:00'], 4: ['18:00'], 5: ['18:00'], 6: ['09:00','12:00','15:00','18:30'] },
+      appointmentMinutes: 120, minNoticeHours: 12, maxDaysOut: 60, cancelHours: 24,
+      services: [{ id: 'gelx', name: 'Gel-X Full Set', price: '$45' }, { id: 'acrylic', name: 'Acrylic Full Set', price: '$50' }, { id: 'fill', name: 'Acrylic Fill', price: '$35' }, { id: 'gelmani', name: 'Gel Manicure', price: '$30' }, { id: 'art', name: 'Nail Art Add-on', price: 'from $10' }],
+      seasonalThemes: true,
+      policies: ['Please arrive with bare nails or book a soak-off.', 'More than 10 minutes late may mean a shortened design or reschedule.', 'Please cancel at least 24 hours ahead so someone else can take the spot.'],
+      updatedAt: 1 }
+  };
+}
+var $ = function(s, r){ return (r || document).querySelector(s); };
+var $$ = function(s, r){ return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
+var esc = function(s){ return String(s == null ? '' : s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); };
+var pad = function(n){ return (n < 10 ? '0' : '') + n; };
+var MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+var WDAYS = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+var WSHORT = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+function toMin(t){ var m = /^(\d{1,2}):(\d{2})$/.exec(String(t)); return m ? (+m[1]) * 60 + (+m[2]) : NaN; }
+function lab(t){ var x = toMin(t), h = Math.floor(x / 60), m = x % 60; return ((h % 12) || 12) + ':' + pad(m) + ' ' + (h >= 12 ? 'PM' : 'AM'); }
+function dayNum(ymd){ var p = ymd.split('-').map(Number); return Math.round(Date.UTC(p[0], p[1] - 1, p[2]) / 864e5); }
+function ymdOf(n){ var d = new Date(n * 864e5); return d.getUTCFullYear() + '-' + pad(d.getUTCMonth() + 1) + '-' + pad(d.getUTCDate()); }
+function wday(ymd){ return new Date(dayNum(ymd) * 864e5).getUTCDay(); }
+function niceDate(ymd){ var d = new Date(dayNum(ymd) * 864e5); return MONTHS[d.getUTCMonth()] + ' ' + d.getUTCDate(); }
+function shortDate(ymd){ var d = new Date(dayNum(ymd) * 864e5); return WSHORT[d.getUTCDay()] + ', ' + MONTHS[d.getUTCMonth()].slice(0,3) + ' ' + d.getUTCDate(); }
+
+function apiFetch(fn, args, attempt){
+  var ctl = 'AbortController' in window ? new AbortController() : null;
+  var timer = ctl ? setTimeout(function(){ ctl.abort(); }, 25000) : null;
+  return fetch(API_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ fn: fn, args: args }), redirect: 'follow', signal: ctl ? ctl.signal : undefined })
+    .then(function(r){ if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+    .then(function(j){ if (timer) clearTimeout(timer); if (j && j.__error) throw new Error(j.__error); return j ? j.result : null; })
+    .catch(function(e){
+      if (timer) clearTimeout(timer);
+      // one quiet retry for read-only calls (cold starts, flaky mobile data)
+      if (attempt < 1 && (fn === 'getPublicData' || fn === 'adminGetData' || fn === 'findBooking')) return new Promise(function(res){ setTimeout(res, 1200); }).then(function(){ return apiFetch(fn, args, attempt + 1); });
+      throw e;
+    });
+}
+function api(fn){
+  var args = Array.prototype.slice.call(arguments, 1);
+  if (DEMO) return demoApi(fn, args);
+  if (!IN_GAS) return apiFetch(fn, args, 0);
+  return new Promise(function(res, rej){
+    try {
+      var r = google.script.run.withSuccessHandler(res).withFailureHandler(function(e){ rej(e && e.message ? e : new Error(String(e))); });
+      r[fn].apply(r, args);
+    } catch (e) { rej(e); }
+  });
+}
+
+var S = {
+  mode: BOOT.mode || 'client', appUrl: BOOT.appUrl || '', data: BOOT.data || null,
+  view: null, sheetDate: null, sel: { time: null, serviceIds: [] }, fresh: {},
+  lastSync: BOOT.data ? Date.now() : 0, syncing: false, online: true,
+  pin: null, admin: null, adminView: null, tab: 'cal', showPast: false, draft: null, firstGrid: true
+};
+
+function nowIn(tz, fallback){
+  try {
+    var f = new Intl.DateTimeFormat('en-CA', { timeZone: tz, year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' });
+    var p = {}; f.formatToParts(new Date()).forEach(function(x){ p[x.type] = x.value; });
+    var h = +p.hour; if (h === 24) h = 0;
+    return { date: p.year + '-' + p.month + '-' + p.day, min: h * 60 + (+p.minute) };
+  } catch (e) { return fallback || { date: ymdOf(Math.floor(Date.now() / 864e5)), min: 0 }; }
+}
+
+/* ---------- shared schedule logic (mirrors the server) ---------- */
+function timesFor(ctx, ymd){
+  if (ctx.days && Object.prototype.hasOwnProperty.call(ctx.days, ymd)) return ctx.days[ymd].slice();
+  var w = ctx.settings.weeklySlots || {};
+  return (w[wday(ymd)] || w[String(wday(ymd))] || []).slice();
+}
+function slotState(ctx, ymd, t){
+  if (ctx.bookedKey[ymd + ' ' + t]) return 'booked';
+  var today = dayNum(ctx.now.date), dn = dayNum(ymd);
+  if (dn > today + Number(ctx.settings.maxDaysOut || 60)) return 'none';
+  if (dn * 1440 + toMin(t) < today * 1440 + ctx.now.min + Number(ctx.settings.minNoticeHours || 0) * 60) return 'past';
+  return 'open';
+}
+function clientCtx(){
+  var d = S.data, key = {};
+  (d.booked || []).forEach(function(b){ key[b.date + ' ' + b.time] = true; });
+  return { settings: d.settings, days: d.days || {}, bookedKey: key, now: nowIn(d.settings.timezone, d.now), admin: false };
+}
+function adminCtx(){
+  var a = S.admin, key = {};
+  a.bookings.forEach(function(b){ if (b.status !== 'Cancelled' && b.status !== 'No-show') key[b.date + ' ' + b.time] = b; });
+  return { settings: a.settings, days: a.days || {}, bookedKey: key, now: nowIn(a.settings.timezone, a.now), admin: true };
+}
+
+/* ---------- grid ---------- */
+function monthBounds(ctx){
+  var t = ctx.now.date.split('-').map(Number);
+  var min = { y: t[0], m: t[1] - 1 };
+  var end = ymdOf(dayNum(ctx.now.date) + Number(ctx.settings.maxDaysOut || 60)).split('-').map(Number);
+  var max = { y: end[0], m: end[1] - 1 };
+  if (ctx.admin) { min = { y: t[1] - 3 < 0 ? t[0] - 1 : t[0], m: (t[1] - 3 + 12) % 12 }; max = { y: max.y + (max.m + 6 > 11 ? 1 : 0), m: (max.m + 6) % 12 }; }
+  return { min: min, max: max };
+}
+function mIndex(v){ return v.y * 12 + v.m; }
+
+function renderGrid(gridEl, titleEl, prevBtn, nextBtn, ctx, view, animate){
+  var y = view.y, m = view.m;
+  var first = y + '-' + pad(m + 1) + '-01';
+  var dim = new Date(Date.UTC(y, m + 1, 0)).getUTCDate();
+  var lead = (wday(first) + 6) % 7;
+  var total = Math.ceil((lead + dim) / 7) * 7;
+  var today = ctx.now.date;
+  var html = '';
+  for (var i = 0; i < total; i++) {
+    var d = i - lead + 1;
+    if (d < 1 || d > dim) { html += '<div class="cell empty" aria-hidden="true"></div>'; continue; }
+    var ymd = y + '-' + pad(m + 1) + '-' + pad(d);
+    var times = timesFor(ctx, ymd);
+    var cls = ['cell', 'day'];
+    if (ymd === today) cls.push('today');
+    if (ymd < today) cls.push('pastday');
+    if (ymd === S.sheetDate && sheetOpen()) cls.push('sel');
+    if (Object.prototype.hasOwnProperty.call(ctx.days, ymd)) cls.push('custom');
+    var inner = '';
+    var shown = 0;
+    times.forEach(function(t){
+      var st = slotState(ctx, ymd, t);
+      if (st === 'none' && !ctx.admin) return;
+      shown++;
+      var k = ymd + ' ' + t;
+      var c = 't ' + (st === 'none' ? 'past' : st) + (S.fresh[k] ? ' fresh' : '');
+      var who = '';
+      if (ctx.admin && ctx.bookedKey[k] && ctx.bookedKey[k].client) who = '<span class="who">' + esc(String(ctx.bookedKey[k].client).split(' ')[0]) + '</span>';
+      inner += '<span class="' + c + '" data-t="' + t + '"' + (st === 'open' ? ' role="button" tabindex="0" aria-label="Book ' + esc(niceDate(ymd) + ' at ' + lab(t)) + '"' : ' aria-label="' + esc(lab(t) + (st === 'booked' ? ' booked' : ' unavailable')) + '"') + '>' + lab(t) + who + '</span>';
+    });
+    var delay = S.firstGrid && animate ? ' style="animation-delay:' + (0.45 + i * 0.018).toFixed(3) + 's"' : '';
+    html += '<div class="' + cls.join(' ') + '" data-d="' + ymd + '"' + delay + '><span class="n">' + d + '</span><div class="times">' + inner + '</div></div>';
+  }
+  gridEl.innerHTML = html;
+  // month title with letter stagger on change
+  var label = MONTHS[m].toUpperCase();
+  if (titleEl.getAttribute('data-v') !== y + '-' + m) {
+    titleEl.setAttribute('data-v', y + '-' + m);
+    titleEl.style.setProperty('--len', String(label.length + 5));
+    var chars = (label + ' ').split('').map(function(ch, j){
+      return '<span class="ch" style="animation-delay:' + (0.2 + j * 0.035).toFixed(3) + 's">' + (ch === ' ' ? '&nbsp;' : ch) + '</span>';
+    }).join('');
+    titleEl.innerHTML = chars + '<span class="ch yr" style="animation-delay:' + (0.2 + label.length * 0.035 + 0.05).toFixed(3) + 's">' + y + '</span>';
+    if (!S.firstGrid) { gridEl.classList.remove('swap'); void gridEl.offsetWidth; gridEl.classList.add('swap'); }
+  }
+  var b = monthBounds(ctx);
+  prevBtn.disabled = mIndex(view) <= mIndex(b.min);
+  nextBtn.disabled = mIndex(view) >= mIndex(b.max);
+}
+
+/* ================================================================ CLIENT */
+function renderClient(){
+  var ctx = clientCtx(), s = ctx.settings;
+  if (!S.view) {
+    var t = ctx.now.date.split('-').map(Number); S.view = { y: t[0], m: t[1] - 1 };
+    // Late in the month with nothing left to book? Open on next month instead.
+    var dim = new Date(Date.UTC(t[0], t[1], 0)).getUTCDate(), openLeft = 0;
+    for (var dd = t[2]; dd <= dim; dd++) { var yy = t[0] + '-' + pad(t[1]) + '-' + pad(dd); timesFor(ctx, yy).forEach(function(x){ if (slotState(ctx, yy, x) === 'open') openLeft++; }); }
+    if (openLeft < 3 && mIndex({ y: t[0], m: t[1] }) <= mIndex(monthBounds(ctx).max)) S.view = t[1] === 12 ? { y: t[0] + 1, m: 0 } : { y: t[0], m: t[1] };
+  }
+  renderGrid($('#grid'), $('#monthTitle'), $('#prevM'), $('#nextM'), ctx, S.view, true);
+  applySeason(S.view.m);
+  if (S.firstGrid) { S.firstGrid = false; setTimeout(function(){ $('#grid').classList.remove('first'); }, 2500); }
+  S.fresh = {};
+  if (sheetOpen() && S.sheetMode === 'day') renderDayPills();
+}
+
+function renderStatic(){
+  var s = S.data.settings;
+  document.title = s.businessName + ' · ' + s.subtitle;
+  $('#bizName').textContent = s.businessName;
+  $('#subtitle').textContent = s.subtitle || 'Nail Appointments';
+  $('#footName').textContent = s.businessName;
+  var ig = $('#footIg');
+  if (s.instagram) { ig.textContent = '@' + s.instagram; ig.href = 'https://instagram.com/' + encodeURIComponent(s.instagram); ig.hidden = false; } else ig.hidden = true;
+  $('#dmLine').innerHTML = 'Booked times are crossed out and update live.' + (s.instagram ? '<br>Don’t see your time? DM <a target="_blank" rel="noopener" href="https://ig.me/m/' + encodeURIComponent(s.instagram) + '">@' + esc(s.instagram) + '</a>' : '');
+  var ml = $('#menuList');
+  if (s.services && s.services.length) {
+    $('#menuPanel').hidden = false;
+    ml.innerHTML = s.services.map(function(x){ return '<div class="menu-row"><span class="nm">' + esc(x.name) + '</span><span class="dots"></span><span class="pr">' + esc(x.price) + '</span></div>'; }).join('');
+  } else $('#menuPanel').hidden = true;
+  $('#policyList').innerHTML = (s.policies || []).map(function(p){ return '<li><span>' + esc(p) + '</span></li>'; }).join('');
+  $('#locLine').innerHTML = esc(s.location || '') + (s.locationNote ? '<br><span style="color:var(--muted)">' + esc(s.locationNote) + '</span>' : '');
+  $('#polPanel').hidden = !(s.policies && s.policies.length) && !s.location;
+  $('#ownerLink').href = (S.appUrl || '') + '?admin=1';
+}
+
+function onGridClick(e){
+  var cell = e.target.closest('.cell.day'); if (!cell) return;
+  var ymd = cell.getAttribute('data-d');
+  var tEl = e.target.closest('.t');
+  if (S.mode === 'admin') { openAdminDay(ymd); return; }
+  var ctx = clientCtx();
+  var times = timesFor(ctx, ymd).filter(function(t){ return slotState(ctx, ymd, t) !== 'none'; });
+  var anyOpen = times.some(function(t){ return slotState(ctx, ymd, t) === 'open'; });
+  if (!times.length) { toast(ymd < ctx.now.date ? 'That day has passed.' : 'No appointments offered on ' + niceDate(ymd) + '.'); return; }
+  var pre = tEl && tEl.classList.contains('open') ? tEl.getAttribute('data-t') : null;
+  if (tEl && tEl.classList.contains('booked')) toast('That time is taken. Here are the others for ' + niceDate(ymd) + '.');
+  if (!anyOpen && !(tEl && tEl.classList.contains('booked'))) { toast(niceDate(ymd) + ' is fully booked.'); }
+  openDay(ymd, pre);
+}
+
+/* ---------- day sheet (client) ---------- */
+function openDay(ymd, preTime){
+  S.sheetDate = ymd; S.sheetMode = 'day';
+  S.sel.time = preTime || null;
+  var s = S.data.settings;
+  S.sel.serviceIds = S.sel.serviceIds.filter(function(id){ return (s.services || []).some(function(x){ return x.id === id; }); });
+  if (!S.sel.serviceIds.length && s.services && s.services.length === 1) S.sel.serviceIds = [s.services[0].id];
+  var d = new Date(dayNum(ymd) * 864e5);
+  var svc = (s.services || []).map(function(x){
+    var on = S.sel.serviceIds.indexOf(x.id) >= 0;
+    return '<button type="button" class="chip' + (on ? ' on' : '') + '" data-svc="' + esc(x.id) + '" aria-pressed="' + on + '"><span class="tick">' + (on ? '✓' : '') + '</span>' + esc(x.name) + (x.price ? ' <b>' + esc(x.price) + '</b>' : '') + '</button>';
+  }).join('');
+  $('#shBody').innerHTML =
+    '<div class="sh-kick">' + WDAYS[d.getUTCDay()] + '</div>' +
+    '<div class="sh-title" id="shTitle">' + esc(niceDate(ymd)) + '</div>' +
+    '<div class="pills" id="pills"></div>' +
+    '<div class="form-wrap" id="formWrap">' +
+      '<div class="divider">Your details</div>' +
+      '<form id="bookForm" autocomplete="on" novalidate>' +
+        (svc ? '<span class="field"><span class="lb">Services · tap all that apply</span></span><div class="chips" id="svcChips">' + svc + '</div>' +
+          '<div class="svc-total" id="svcTotal"><span id="svcCount">Nothing selected yet</span><b id="svcSum"></b></div>' : '') +
+        '<label class="field"><span class="lb">Full name</span><input id="bName" name="name" autocomplete="name" maxlength="60" required></label>' +
+        '<label class="field"><span class="lb">Instagram handle</span><input id="bIg" name="ig" autocapitalize="none" autocorrect="off" spellcheck="false" placeholder="@yourhandle" maxlength="40" required></label>' +
+        '<label class="field"><span class="lb">Notes · shape, length, inspo</span><textarea id="bNotes" maxlength="400" rows="2"></textarea></label>' +
+        '<input class="hp" id="bWeb" tabindex="-1" autocomplete="off" aria-hidden="true">' +
+        '<button class="btn dark block" type="submit" id="bookBtn">Reserve</button>' +
+        '<p class="fine">You’ll get a booking code to look up or cancel your appointment.</p>' +
+      '</form>' +
+    '</div>';
+  renderDayPills();
+  updateTotal(false);
+  openSheet();
+  restoreDraft();
+}
+function cleanIg(v){ return String(v || '').trim().replace(/^@+/, '').replace(/^https?:\/\/(www\.)?instagram\.com\//i, '').replace(/[\/?#].*$/, '').toLowerCase().slice(0, 30); }
+function priceTotal(list){
+  if (!list.length) return '';
+  var total = 0, any = false, from = false;
+  list.forEach(function(x){
+    var p = String(x.price || ''), m = /(\d+(?:\.\d+)?)/.exec(p.replace(/,/g, ''));
+    if (m) { total += Number(m[1]); any = true; } else from = true;
+    if (/from|\+|up/i.test(p)) from = true;
+  });
+  if (!any) return list.map(function(x){ return x.price; }).filter(String).join(' + ');
+  var t = Math.round(total * 100) / 100;
+  return (from ? 'from ' : '') + '$' + (t % 1 ? t.toFixed(2) : String(t));
+}
+function selectedServices(){
+  var all = S.data.settings.services || [];
+  return S.sel.serviceIds.map(function(id){ return all.filter(function(x){ return x.id === id; })[0]; }).filter(Boolean);
+}
+function updateTotal(bump){
+  var box = $('#svcTotal'); if (!box) return;
+  var list = selectedServices();
+  $('#svcCount').textContent = list.length ? list.length + (list.length === 1 ? ' service' : ' services') + ' · estimated total' : 'Nothing selected yet';
+  $('#svcSum').textContent = priceTotal(list);
+  if (bump) { box.classList.remove('bump'); void box.offsetWidth; box.classList.add('bump'); }
+}
+function renderDayPills(){
+  var ymd = S.sheetDate, ctx = clientCtx();
+  var times = timesFor(ctx, ymd).filter(function(t){ return slotState(ctx, ymd, t) !== 'none'; });
+  if (S.sel.time && slotState(ctx, ymd, S.sel.time) !== 'open') {
+    toast('Heads up: ' + lab(S.sel.time) + ' was just booked by someone else. Pick another time.');
+    S.sel.time = null;
+  }
+  var box = $('#pills'); if (!box) return;
+  var anyOpen = false;
+  box.innerHTML = times.map(function(t){
+    var st = slotState(ctx, ymd, t);
+    if (st === 'open') anyOpen = true;
+    var dis = st !== 'open' ? ' disabled' : '';
+    var sub = st === 'booked' ? '<small>Booked</small>' : st === 'past' ? '<small>Unavailable</small>' : '';
+    return '<button type="button" class="pill ' + st + (S.sel.time === t ? ' on' : '') + '" data-pick="' + t + '"' + dis + '><span>' + lab(t) + '</span>' + sub + '</button>';
+  }).join('');
+  if (!anyOpen) {
+    box.insertAdjacentHTML('afterend', '');
+    var ig = S.data.settings.instagram;
+    if (!$('#fullMsg')) box.insertAdjacentHTML('afterend', '<p class="empty-msg" id="fullMsg">This day is fully booked.' + (ig ? '<br>DM <b>@' + esc(ig) + '</b> to join the waitlist.' : '') + '</p>');
+  } else if ($('#fullMsg')) $('#fullMsg').remove();
+  var fw = $('#formWrap');
+  if (fw) fw.classList.toggle('on', !!S.sel.time);
+  var btn = $('#bookBtn');
+  if (btn && !btn.disabled) btn.textContent = S.sel.time ? 'Reserve ' + lab(S.sel.time) : 'Reserve';
+}
+
+var DRAFT_KEY = 'nail_booking_draft';
+function saveDraft(){
+  try { sessionStorage.setItem(DRAFT_KEY, JSON.stringify({ n: $('#bName').value, i: $('#bIg').value })); } catch (e) {}
+}
+function restoreDraft(){
+  try { var d = JSON.parse(sessionStorage.getItem(DRAFT_KEY) || 'null'); if (d) { $('#bName').value = d.n || ''; $('#bIg').value = d.i || ''; } } catch (e) {}
+}
+
+function onSheetClick(e){
+  var p = e.target.closest('[data-pick]');
+  if (p && !p.disabled) { S.sel.time = p.getAttribute('data-pick'); renderDayPills(); setTimeout(function(){ var f = $('#svcChips') || $('#bName'); if (f) f.scrollIntoView({ behavior: 'smooth', block: 'center' }); }, 250); return; }
+  var c = e.target.closest('[data-svc]');
+  if (c) {
+    var id = c.getAttribute('data-svc'), i = S.sel.serviceIds.indexOf(id);
+    if (i >= 0) S.sel.serviceIds.splice(i, 1); else S.sel.serviceIds.push(id);
+    var on = i < 0;
+    c.classList.toggle('on', on); c.setAttribute('aria-pressed', String(on)); c.querySelector('.tick').textContent = on ? '✓' : '';
+    updateTotal(true);
+    return;
+  }
+}
+
+async function submitBooking(e){
+  e.preventDefault();
+  var s = S.data.settings;
+  var name = $('#bName').value.trim(), ig = cleanIg($('#bIg').value);
+  if (!S.sel.time) return toast('Pick a time first.');
+  if (s.services && s.services.length && !S.sel.serviceIds.length) { toast('Choose at least one service.'); $('#svcChips').scrollIntoView({ behavior: 'smooth', block: 'center' }); return; }
+  if (name.length < 2) { $('#bName').focus(); return toast('Please add your name.'); }
+  if (!/^[a-z0-9._]{1,30}$/.test(ig)) { $('#bIg').focus(); return toast('Please add your Instagram handle.'); }
+  saveDraft();
+  var btn = $('#bookBtn'); btn.disabled = true; btn.innerHTML = '<span class="spin"></span> Reserving';
+  var payload = { date: S.sheetDate, time: S.sel.time, serviceIds: S.sel.serviceIds.slice(), name: name,
+    instagram: ig, notes: $('#bNotes').value.trim(), website: $('#bWeb').value };
+  try {
+    var res = await api('createBooking', payload);
+    if (!res || !res.ok) {
+      btn.disabled = false; renderDayPills();
+      toast((res && res.error) || 'Could not book. Please try again.');
+      if (res && res.code === 'TAKEN') refresh(true);
+      return;
+    }
+    S.sheetMode = 'done'; S.sel.time = null;
+    S.data.booked.push({ date: res.booking.date, time: res.booking.time });
+    S.fresh[res.booking.date + ' ' + res.booking.time] = true;
+    showConfirm(res.booking);
+    renderClient();
+    burst();
+    setTimeout(function(){ refresh(true); }, 1500);
+  } catch (err) {
+    btn.disabled = false; renderDayPills();
+    toast('Connection problem. Check your signal and try again.');
+  }
+}
+
+function showConfirm(b){
+  S.sheetMode = 'done';
+  var s = S.data.settings;
+  var gcal = gcalLink(s, b);
+  $('#shBody').innerHTML =
+    '<div class="done">' +
+      '<svg class="check" viewBox="0 0 80 80"><circle cx="40" cy="40" r="37"/><path d="M25 41 l10 10 l20 -22"/></svg>' +
+      '<h3>You’re booked</h3>' +
+      '<div class="sh-kick" style="margin-top:10px">See you soon, ' + esc(b.client.split(' ')[0]) + '</div>' +
+      '<div class="ticket">' +
+        '<div class="r"><span>When</span><b>' + esc(shortDate(b.date)) + ' · ' + lab(b.time) + '</b></div>' +
+        (b.service ? '<div class="r"><span>Service</span><b style="text-align:right">' + esc(b.service) + '</b></div>' : '') +
+        (b.price ? '<div class="r"><span>Est. total</span><b>' + esc(b.price) + '</b></div>' : '') +
+        '<div class="r"><span>Code</span><span class="code">' + esc(b.code) + '</span></div>' +
+      '</div>' +
+      '<div class="stack">' +
+        '<a class="btn dark block" target="_blank" rel="noopener" href="' + esc(gcal) + '">Add to my calendar</a>' +
+      '</div>' +
+      '<p class="fine">Screenshot this. Your code + Instagram lets you look up or cancel at the bottom of this page.' + (s.locationNote ? ' ' + esc(s.locationNote) : '') + '</p>' +
+      '<button class="btn block" style="margin-top:6px" id="doneBtn">Done</button>' +
+    '</div>';
+  $('#sheet').scrollTop = 0;
+}
+function gcalLink(s, b){
+  var st = b.date.replace(/-/g, '') + 'T' + b.time.replace(':', '') + '00';
+  var endMin = toMin(b.time) + Number(s.appointmentMinutes || 120);
+  var endDay = b.date;
+  if (endMin >= 1440) { endMin -= 1440; endDay = ymdOf(dayNum(b.date) + 1); }
+  var en = endDay.replace(/-/g, '') + 'T' + pad(Math.floor(endMin / 60)) + pad(endMin % 60) + '00';
+  return 'https://calendar.google.com/calendar/render?action=TEMPLATE&text=' + encodeURIComponent('Nails · ' + s.businessName) +
+    '&dates=' + st + '/' + en + '&ctz=' + encodeURIComponent(s.timezone) +
+    '&details=' + encodeURIComponent((b.service ? b.service + '\n' : '') + 'Booking code: ' + b.code) +
+    '&location=' + encodeURIComponent(s.location || '');
+}
+
+/* ---------- find / cancel ---------- */
+async function findBooking(e){
+  e.preventDefault();
+  var code = $('#fCode').value.trim(), last4 = cleanIg($('#fIg').value);
+  var out = $('#findResult');
+  out.innerHTML = '<p class="note"><span class="spin" style="display:inline-block;vertical-align:middle;width:14px;height:14px;border-radius:50%;border:1.5px solid currentColor;border-right-color:transparent;animation:spin .8s linear infinite"></span></p>';
+  try {
+    var r = await api('findBooking', code, last4);
+    if (!r.ok) { out.innerHTML = '<p class="note">' + esc(r.error) + '</p>'; return; }
+    var b = r.booking;
+    out.innerHTML = '<div class="ticket" style="margin-top:20px">' +
+      '<div class="r"><span>When</span><b>' + esc(shortDate(b.date)) + ' · ' + lab(b.time) + '</b></div>' +
+      (b.service ? '<div class="r"><span>Service</span><b>' + esc(b.service) + '</b></div>' : '') +
+      '<div class="r"><span>Status</span><b>' + esc(b.status) + '</b></div></div>' +
+      (r.canCancel ? '<button class="btn line block" id="cancelBtn">Cancel this appointment</button>' :
+        (b.status === 'Confirmed' ? '<p class="note">Inside the ' + esc(S.data.settings.cancelHours) + '-hour window. DM @' + esc(S.data.settings.instagram) + ' to make changes.</p>' : ''));
+    var cb = $('#cancelBtn');
+    if (cb) cb.addEventListener('click', async function(){
+      if (cb.getAttribute('data-sure') !== '1') { cb.setAttribute('data-sure', '1'); cb.textContent = 'Tap again to confirm'; return; }
+      cb.disabled = true; cb.innerHTML = '<span class="spin"></span> Cancelling';
+      var x = await api('cancelBooking', code, last4).catch(function(){ return { ok: false, error: 'Connection problem. Try again.' }; });
+      if (x.ok) { out.innerHTML = '<p class="note">Cancelled. That time is open again. Hope to see you soon.</p>'; refresh(true); }
+      else { cb.disabled = false; cb.textContent = 'Cancel this appointment'; toast(x.error); }
+    });
+  } catch (err) { out.innerHTML = '<p class="note">Connection problem. Try again.</p>'; }
+}
+
+/* ---------- live refresh ---------- */
+async function refresh(force){
+  if (S.syncing) return;
+  if (!force && document.hidden) return;
+  S.syncing = true;
+  try {
+    var d = await api('getPublicData');
+    if (S.data) {
+      var old = {}; (S.data.booked || []).forEach(function(b){ old[b.date + ' ' + b.time] = 1; });
+      (d.booked || []).forEach(function(b){ var k = b.date + ' ' + b.time; if (!old[k]) S.fresh[k] = true; });
+    }
+    var settingsChanged = !S.data || S.data.settings.updatedAt !== d.settings.updatedAt;
+    S.data = d; S.lastSync = Date.now(); setLive(true);
+    if (!IN_GAS && !DEMO) writeCache(d);
+    if (settingsChanged) renderStatic();
+    renderClient();
+  } catch (e) { setLive(false); }
+  finally { S.syncing = false; }
+}
+function setLive(ok){
+  S.online = ok;
+  var el = S.mode === 'admin' ? $('#aLive') : $('#live');
+  if (el) el.classList.toggle('off', !ok);
+  tickLive();
+}
+function tickLive(){
+  var el = $('#liveTxt'); if (!el) return;
+  if (DEMO) { el.textContent = 'Preview'; return; }
+  if (!S.online) { el.textContent = 'Reconnecting'; return; }
+  var s = Math.round((Date.now() - S.lastSync) / 1000);
+  el.textContent = s < 20 ? 'Live' : 'Live · ' + (s < 60 ? s + 's' : Math.round(s / 60) + 'm') + ' ago';
+}
+
+/* ================================================================ OWNER */
+function aapi(fn){
+  var args = Array.prototype.slice.call(arguments, 1);
+  return api.apply(null, [fn, S.pin].concat(args)).then(function(r){
+    if (r && r.ok === false && r.auth === false) { logout(); throw new Error(r.error); }
+    return r;
+  });
+}
+async function login(e){
+  e.preventDefault();
+  var pin = $('#pinIn').value.trim(); if (!pin) return;
+  var btn = $('#loginBtn'); btn.disabled = true; btn.innerHTML = '<span class="spin"></span> Checking';
+  try {
+    var r = await api('adminLogin', pin);
+    if (!r.ok) { toast(r.error || 'Wrong PIN.'); btn.disabled = false; btn.textContent = 'Open dashboard'; $('#pinIn').select(); return; }
+    S.pin = pin; try { sessionStorage.setItem('nail_owner_pin', pin); } catch (x) {}
+    gotAdmin(r);
+    $('#loginView').hidden = true; $('#dash').hidden = false;
+  } catch (err) { toast('Connection problem.'); btn.disabled = false; btn.textContent = 'Open dashboard'; }
+}
+function logout(){ S.pin = null; try { sessionStorage.removeItem('nail_owner_pin'); } catch (x) {} $('#dash').hidden = true; $('#loginView').hidden = false; var b = $('#loginBtn'); b.disabled = false; b.textContent = 'Open dashboard'; }
+function gotAdmin(r){
+  if (!r || !r.ok) { if (r && r.error) toast(r.error); return; }
+  S.admin = r; S.lastSync = Date.now(); setLive(true);
+  if (!S.draft) S.draft = JSON.parse(JSON.stringify(r.settings));
+  renderAdmin();
+}
+function renderAdmin(){
+  var a = S.admin, ctx = adminCtx();
+  $('#aName').textContent = a.settings.businessName;
+  if (!S.adminView) { var t = ctx.now.date.split('-').map(Number); S.adminView = { y: t[0], m: t[1] - 1 }; }
+  renderGrid($('#aGrid'), $('#aMonth'), $('#aPrev'), $('#aNext'), ctx, S.adminView, false);
+  S.fresh = {};
+  // stats
+  var today = ctx.now.date, tn = dayNum(today);
+  var active = a.bookings.filter(function(b){ return b.status === 'Confirmed' || b.status === 'Completed'; });
+  $('#stToday').textContent = active.filter(function(b){ return b.date === today; }).length;
+  $('#stWeek').textContent = active.filter(function(b){ var n = dayNum(b.date); return n >= tn && n < tn + 7; }).length;
+  var open = 0;
+  for (var i = 0; i < 14; i++) { var y = ymdOf(tn + i); timesFor(ctx, y).forEach(function(t){ if (slotState(ctx, y, t) === 'open') open++; }); }
+  $('#stOpen').textContent = open;
+  $('#stOpen').nextElementSibling.textContent = 'Open · 14 days';
+  renderApptList();
+  if (sheetOpen() && S.sheetMode === 'admin-day') openAdminDay(S.sheetDate, true);
+  if (S.tab === 'set' && !$('#setPanel').innerHTML) renderSettings();
+}
+function apptCard(b, withDate){
+  var tel = String(b.phone || '').replace(/[^\d+]/g, '');
+  var dim = b.status === 'Cancelled' || b.status === 'No-show';
+  var acts = '';
+  if (b.status === 'Confirmed') acts = '<button class="btn line sm" data-st="Completed" data-id="' + b.id + '">Done</button><button class="btn line sm" data-st="No-show" data-id="' + b.id + '">No-show</button><button class="btn line sm" data-st="Cancelled" data-id="' + b.id + '">Cancel</button>';
+  else acts = '<button class="btn line sm" data-st="Confirmed" data-id="' + b.id + '">Restore</button>';
+  return '<div class="appt' + (dim ? ' dim' : '') + '">' +
+    '<div class="h"><span class="tm">' + (withDate ? esc(shortDate(b.date)) + ' · ' : '') + lab(b.time) + '</span><span class="badge ' + esc(b.status) + '">' + esc(b.status) + '</span></div>' +
+    '<div class="nm">' + esc(b.client) + (b.service ? ' · <span style="font-weight:400">' + esc(b.service) + (b.price ? ' (' + esc(b.price) + ')' : '') + '</span>' : '') + '</div>' +
+    '<div class="meta">' +
+      (b.phone ? '<a href="tel:' + esc(tel) + '">' + esc(b.phone) + '</a> · <a href="sms:' + esc(tel) + '">Text</a>' : '') +
+      (b.instagram ? ' · <a target="_blank" rel="noopener" href="https://instagram.com/' + encodeURIComponent(b.instagram) + '">@' + esc(b.instagram) + '</a>' : '') +
+      (b.notes ? '<br>“' + esc(b.notes) + '”' : '') +
+      '<br><span style="color:var(--muted)">Code ' + esc(b.code) + ' · via ' + esc(b.source || 'Website') + '</span>' +
+    '</div>' +
+    '<div class="acts">' + acts + '</div></div>';
+}
+function renderApptList(){
+  var a = S.admin, today = adminCtx().now.date;
+  var list = a.bookings.slice().sort(function(x, y){ return (x.date + x.time).localeCompare(y.date + y.time); });
+  list = S.showPast ? list.filter(function(b){ return b.date < today; }).reverse() : list.filter(function(b){ return b.date >= today; });
+  $('#showPastBtn').textContent = S.showPast ? 'Show upcoming' : 'Show past';
+  if (!list.length) { $('#apptList').innerHTML = '<p class="note">' + (S.showPast ? 'No past bookings in the last 60 days.' : 'No upcoming bookings yet. Share your link!') + '</p>'; return; }
+  var html = '', cur = '';
+  list.forEach(function(b){
+    if (b.date !== cur) { cur = b.date; html += '<div class="day-h">' + esc(shortDate(b.date)) + (b.date === today ? ' · Today' : '') + '</div>'; }
+    html += apptCard(b, false);
+  });
+  $('#apptList').innerHTML = html;
+}
+
+function openAdminDay(ymd, keep){
+  S.sheetDate = ymd; S.sheetMode = 'admin-day';
+  var a = S.admin, ctx = adminCtx();
+  var times = timesFor(ctx, ymd);
+  var custom = Object.prototype.hasOwnProperty.call(ctx.days, ymd);
+  var dayB = a.bookings.filter(function(b){ return b.date === ymd; });
+  var d = new Date(dayNum(ymd) * 864e5);
+  var rows = times.map(function(t){
+    var b = dayB.filter(function(x){ return x.time === t && x.status !== 'Cancelled' && x.status !== 'No-show'; })[0];
+    if (b) return apptCard(b, false);
+    var st = slotState(ctx, ymd, t);
+    return '<div class="open-slot"><span class="tm">' + lab(t) + ' <span class="badge" style="margin-left:6px">' + (st === 'open' ? 'Open' : 'Closed to booking') + '</span></span>' +
+      '<span style="display:flex;gap:6px"><button class="btn line sm" data-addfor="' + t + '">Book</button><button class="btn line sm" data-rmtime="' + t + '" aria-label="Remove ' + lab(t) + '">✕</button></span></div>';
+  }).join('');
+  var gone = dayB.filter(function(b){ return b.status === 'Cancelled' || b.status === 'No-show'; }).map(function(b){ return apptCard(b, false); }).join('');
+  $('#shBody').innerHTML =
+    '<div class="sh-kick">' + WDAYS[d.getUTCDay()] + (custom ? ' · Custom day' : ' · Weekly schedule') + '</div>' +
+    '<div class="sh-title" id="shTitle">' + esc(niceDate(ymd)) + '</div>' +
+    (rows || '<p class="empty-msg">No appointment times on this day.</p>') +
+    '<div class="divider">Edit this day</div>' +
+    '<div class="tchips" style="justify-content:center;margin-bottom:14px"><span class="addt"><input type="time" id="dayAddT" step="900" aria-label="New time"><button id="dayAddBtn" aria-label="Add time">+</button></span></div>' +
+    '<div class="row2">' +
+      '<button class="btn line sm" id="dayOffBtn">Day off</button>' +
+      (custom ? '<button class="btn line sm" id="dayResetBtn">Use weekly times</button>' : '<button class="btn line sm" id="dayAddBookBtn">+ Booking</button>') +
+    '</div>' +
+    (gone ? '<div class="day-h">Cancelled / no-show</div>' + gone : '');
+  if (!keep) openSheet();
+}
+async function setDayTimes(ymd, times){
+  var r = await aapi('adminSetDay', ymd, times, '').catch(function(e){ toast(e.message || 'Connection problem.'); });
+  if (r) { gotAdmin(r); toast(times === null ? 'Back to weekly times.' : times.length ? 'Day updated.' : 'Marked as day off.'); }
+}
+function openAddBooking(ymd, time){
+  S.sheetMode = 'admin-add';
+  var s = S.admin.settings;
+  var today = adminCtx().now.date;
+  $('#shBody').innerHTML =
+    '<div class="sh-kick">Owner</div><div class="sh-title" id="shTitle">Add a booking</div>' +
+    '<form id="addForm">' +
+      '<div class="row2"><label class="field"><span class="lb">Date</span><input type="date" id="aD" value="' + esc(ymd || today) + '" required></label>' +
+      '<label class="field"><span class="lb">Time</span><input type="time" id="aT" value="' + esc(time || '') + '" required></label></div>' +
+      '<label class="field"><span class="lb">Client name</span><input id="aN" maxlength="60" required></label>' +
+      '<div class="row2"><label class="field"><span class="lb">Phone</span><input id="aP" type="tel" maxlength="25"></label>' +
+      '<label class="field"><span class="lb">Instagram</span><input id="aI" maxlength="40" autocapitalize="none"></label></div>' +
+      (s.services.length ? '<label class="field"><span class="lb">Service</span><select id="aS"><option value="">—</option>' + s.services.map(function(x){ return '<option value="' + esc(x.id) + '">' + esc(x.name) + ' · ' + esc(x.price) + '</option>'; }).join('') + '</select></label>' : '') +
+      '<label class="field"><span class="lb">Notes</span><input id="aNo" maxlength="400"></label>' +
+      '<button class="btn dark block" type="submit" id="aSave">Save booking</button>' +
+      '<p class="fine">Adds it to the calendar and crosses the time out for everyone instantly.</p>' +
+    '</form>';
+  openSheet();
+}
+async function saveAddBooking(e){
+  e.preventDefault();
+  var btn = $('#aSave'); btn.disabled = true; btn.innerHTML = '<span class="spin"></span> Saving';
+  var p = { date: $('#aD').value, time: $('#aT').value, name: $('#aN').value, phone: $('#aP').value, instagram: $('#aI').value, serviceIds: $('#aS') && $('#aS').value ? [$('#aS').value] : [], notes: $('#aNo').value };
+  var r = await aapi('adminAddBooking', p).catch(function(err){ return { ok: false, error: err.message || 'Connection problem.' }; });
+  if (!r.ok) { btn.disabled = false; btn.textContent = 'Save booking'; toast(r.error); return; }
+  S.fresh[p.date + ' ' + p.time] = true;
+  gotAdmin(r); toast('Booking saved.'); openAdminDay(p.date, true);
+}
+
+/* ---------- settings ---------- */
+function renderSettings(){
+  var s = S.draft;
+  var order = [1, 2, 3, 4, 5, 6, 0];
+  var wk = order.map(function(d){
+    var list = (s.weeklySlots[d] || s.weeklySlots[String(d)] || []);
+    return '<div class="wk"><div class="d">' + WSHORT[d] + '</div><div class="tchips">' +
+      (list.length ? list.map(function(t){ return '<span class="tchip">' + lab(t) + '<button type="button" data-wrm="' + d + '|' + t + '" aria-label="Remove">×</button></span>'; }).join('') : '<span style="font-size:12px;color:var(--muted);padding:6px 0">Closed</span>') +
+      '<span class="addt"><input type="time" step="900" data-wadd-in="' + d + '" aria-label="Add time for ' + WDAYS[d] + '"><button type="button" data-wadd="' + d + '" aria-label="Add">+</button></span>' +
+      '</div></div>';
+  }).join('');
+  var svc = s.services.map(function(x, i){
+    return '<div class="svc-row"><label class="field"><span class="lb">Service</span><input data-sv="' + i + '|name" value="' + esc(x.name) + '" maxlength="60"></label>' +
+      '<label class="field"><span class="lb">Price</span><input data-sv="' + i + '|price" value="' + esc(x.price) + '" maxlength="20"></label>' +
+      '<button type="button" class="rm" data-svrm="' + i + '" aria-label="Remove service">×</button></div>';
+  }).join('');
+  function f(k, label, type, extra){ return '<label class="field"><span class="lb">' + label + '</span><input data-k="' + k + '" type="' + (type || 'text') + '" value="' + esc(s[k]) + '"' + (extra || '') + '></label>'; }
+  $('#setPanel').innerHTML =
+    '<div class="sec">Weekly times</div><p class="fine" style="text-align:left;margin:0 0 6px">These repeat every week. Change a single date from the Calendar tab.</p>' + wk +
+    '<div class="sec">Services</div>' + svc + '<button type="button" class="btn line sm" id="svAdd">+ Add service</button>' +
+    '<div class="sec">Business</div>' + f('businessName', 'Business name') + f('subtitle', 'Calendar subtitle') + f('instagram', 'Instagram handle') + f('location', 'Location') + f('locationNote', 'Location note') +
+    '<div class="sec">Policies</div><label class="field"><span class="lb">One per line</span><textarea id="polText" rows="5">' + esc((s.policies || []).join('\n')) + '</textarea></label>' +
+    '<div class="sec">Booking rules</div><div class="row2">' + f('minNoticeHours', 'Min notice (hours)', 'number', ' min="0"') + f('maxDaysOut', 'Book up to (days out)', 'number', ' min="7"') + '</div>' +
+    '<div class="row2">' + f('cancelHours', 'Online cancel cutoff (hrs)', 'number', ' min="0"') + f('appointmentMinutes', 'Appt length (min)', 'number', ' min="15"') + '</div>' +
+    '<div class="sec">Notifications</div>' + f('notifyEmail', 'Email me new bookings', 'email', ' placeholder="you@gmail.com"') +
+    '<label class="chk"><input type="checkbox" data-k="syncCalendar"' + (s.syncCalendar ? ' checked' : '') + '> Add bookings to my Google Calendar</label>' +
+    '<div class="sec">Look</div>' +
+    '<label class="chk"><input type="checkbox" data-k="seasonalThemes"' + (s.seasonalThemes !== false ? ' checked' : '') + '> Seasonal themes (Halloween in Oct, Thanksgiving in Nov, Christmas in Dec)</label>' +
+    '<div class="savebar"><button class="btn dark block" id="saveSet">Save changes</button></div>' +
+    '<div class="sec">Security &amp; links</div>' +
+    '<div class="row2"><label class="field"><span class="lb">New PIN</span><input id="newPin" inputmode="numeric" maxlength="10" type="password"></label><div style="display:flex;align-items:flex-end;padding-bottom:16px"><button class="btn line sm block" id="pinBtn">Change PIN</button></div></div>' +
+    '<div class="stack"><a class="btn line block" target="_blank" rel="noopener" href="' + esc(S.admin.sheetUrl) + '">Open Google Sheet</a>' +
+    '<a class="btn line block" href="' + esc(S.admin.appUrl || S.appUrl) + '">View public booking page</a>' +
+    '<button class="btn block" id="logoutBtn">Log out</button></div>';
+}
+function onSettingsInput(e){
+  var t = e.target;
+  if (t.hasAttribute('data-k')) { var k = t.getAttribute('data-k'); S.draft[k] = t.type === 'checkbox' ? t.checked : t.value; }
+  if (t.hasAttribute('data-sv')) { var p = t.getAttribute('data-sv').split('|'); S.draft.services[+p[0]][p[1]] = t.value; }
+  if (t.id === 'polText') S.draft.policies = t.value.split('\n').map(function(x){ return x.trim(); }).filter(Boolean);
+}
+async function onSettingsClick(e){
+  var t = e.target.closest('button'); if (!t) return;
+  var s = S.draft;
+  if (t.hasAttribute('data-wrm')) { var p = t.getAttribute('data-wrm').split('|'); s.weeklySlots[p[0]] = (s.weeklySlots[p[0]] || []).filter(function(x){ return x !== p[1]; }); renderSettings(); return; }
+  if (t.hasAttribute('data-wadd')) {
+    var d = t.getAttribute('data-wadd'), v = $('[data-wadd-in="' + d + '"]').value;
+    if (!v) return toast('Pick a time first.');
+    var l = (s.weeklySlots[d] || []).slice(); if (l.indexOf(v) < 0) l.push(v); l.sort(); s.weeklySlots[d] = l; renderSettings(); return;
+  }
+  if (t.id === 'svAdd') { s.services.push({ id: '', name: '', price: '' }); renderSettings(); var ins = $$('[data-sv$="|name"]'); ins[ins.length - 1].focus(); return; }
+  if (t.hasAttribute('data-svrm')) { s.services.splice(+t.getAttribute('data-svrm'), 1); renderSettings(); return; }
+  if (t.id === 'saveSet') {
+    t.disabled = true; t.innerHTML = '<span class="spin"></span> Saving';
+    var r = await aapi('adminSaveSettings', s).catch(function(err){ return { ok: false, error: err.message }; });
+    t.disabled = false; t.textContent = 'Save changes';
+    if (r.ok) { S.draft = JSON.parse(JSON.stringify(r.settings)); gotAdmin(r); renderSettings(); toast('Saved. Your booking page is updated.'); } else toast(r.error || 'Could not save.');
+    return;
+  }
+  if (t.id === 'pinBtn') {
+    var np = $('#newPin').value.trim();
+    var r2 = await aapi('adminChangePin', np).catch(function(err){ return { ok: false, error: err.message }; });
+    if (r2.ok) { S.pin = np; try { sessionStorage.setItem('nail_owner_pin', np); } catch (x) {} $('#newPin').value = ''; toast('PIN changed.'); } else toast(r2.error);
+    return;
+  }
+  if (t.id === 'logoutBtn') { logout(); return; }
+}
+
+/* ================================================================ SHARED UI */
+function sheetOpen(){ return $('#sheet').classList.contains('on'); }
+function openSheet(){ $('#scrim').classList.add('on'); $('#sheet').classList.add('on'); $('#sheet').scrollTop = 0; document.body.style.overflow = 'hidden'; markSel(); }
+function closeSheet(){
+  $('#scrim').classList.remove('on'); $('#sheet').classList.remove('on'); document.body.style.overflow = '';
+  S.sheetMode = null; S.sel.time = null; markSel();
+}
+function markSel(){ $$('.cell.sel').forEach(function(c){ c.classList.remove('sel'); }); if (sheetOpen() && S.sheetDate) $$('.cell[data-d="' + S.sheetDate + '"]').forEach(function(c){ c.classList.add('sel'); }); }
+var toastTimer;
+function toast(msg){ var t = $('#toast'); t.textContent = msg; t.classList.add('on'); clearTimeout(toastTimer); toastTimer = setTimeout(function(){ t.classList.remove('on'); }, 3600); }
+function copyText(txt){
+  function fallback(){ var ta = document.createElement('textarea'); ta.value = txt; ta.setAttribute('readonly', ''); ta.style.position = 'fixed'; ta.style.opacity = '0'; document.body.appendChild(ta); ta.select(); ta.setSelectionRange(0, 99999); var ok = false; try { ok = document.execCommand('copy'); } catch (e) {} ta.remove(); return ok; }
+  var done = function(){ toast('Copied: ' + txt); };
+  if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(txt).then(done, function(){ fallback() ? done() : toast(txt); });
+  else fallback() ? done() : toast(txt);
+}
+function burst(){
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var colors = ['#2c1911', '#ebe2d3', '#c9b39f', '#b98a7c', '#f7f3ea'];
+  var cx = window.innerWidth / 2, cy = window.innerHeight * 0.32;
+  for (var i = 0; i < 46; i++) {
+    var el = document.createElement('div'); el.className = 'dot-fx';
+    var sz = 5 + Math.random() * 9; el.style.width = el.style.height = sz + 'px';
+    el.style.left = cx + 'px'; el.style.top = cy + 'px';
+    el.style.background = colors[i % colors.length];
+    if (i % 5 === 1 || i % 5 === 4) el.style.boxShadow = '0 0 0 1px rgba(44,25,17,.25)';
+    document.body.appendChild(el);
+    var ang = Math.random() * Math.PI * 2, dist = 90 + Math.random() * 190;
+    var dx = Math.cos(ang) * dist, dy = Math.sin(ang) * dist - 60;
+    el.animate([
+      { transform: 'translate(-50%,-50%) scale(.2)', opacity: 1 },
+      { transform: 'translate(calc(-50% + ' + dx + 'px), calc(-50% + ' + dy + 'px)) scale(1)', opacity: 1, offset: .55 },
+      { transform: 'translate(calc(-50% + ' + dx * 1.1 + 'px), calc(-50% + ' + (dy + 220) + 'px)) scale(.8)', opacity: 0 }
+    ], { duration: 1500 + Math.random() * 700, easing: 'cubic-bezier(.2,.7,.3,1)', fill: 'forwards' });
+    setTimeout(function(n){ return function(){ n.remove(); }; }(el), 2400);
+  }
+}
+
+/* ================================================================ SEASONS */
+var SEASON_BY_MONTH = { 9: 'oct', 10: 'nov', 11: 'dec' };
+var ART = {
+  pumpkins: '<svg viewBox="0 0 170 104"><defs><radialGradient id="pkA" cx="40%" cy="35%" r="70%"><stop offset="0" stop-color="#e9a066"/><stop offset="1" stop-color="#c1693a"/></radialGradient><radialGradient id="pkB" cx="40%" cy="35%" r="70%"><stop offset="0" stop-color="#f0c08a"/><stop offset="1" stop-color="#cf8a4c"/></radialGradient><radialGradient id="pkC" cx="40%" cy="35%" r="70%"><stop offset="0" stop-color="#f6ecdc"/><stop offset="1" stop-color="#dccab0"/></radialGradient></defs>' +
+    '<g transform="translate(96 40)"><path d="M28 6c-1-6 2-9 5-9" stroke="#5a3a1e" stroke-width="3.2" fill="none" stroke-linecap="round"/><path d="M31 2c6-5 13-3 14 1-6 3-11 3-14-1z" fill="#7f8c5b"/><ellipse cx="15" cy="33" rx="15" ry="22" fill="url(#pkB)"/><ellipse cx="43" cy="33" rx="15" ry="22" fill="url(#pkB)"/><ellipse cx="29" cy="33" rx="16" ry="25" fill="url(#pkB)"/><path d="M29 9v48M17 13c-5 10-5 30 0 40M41 13c5 10 5 30 0 40" stroke="#b97a3f" stroke-width="1" fill="none" opacity=".45"/></g>' +
+    '<g transform="translate(6 18)"><path d="M48 10c-2-8 2-12 6-12" stroke="#5a3a1e" stroke-width="3.6" fill="none" stroke-linecap="round"/><path d="M52 4c8-6 17-3 18 2-8 4-14 3-18-2z" fill="#7f8c5b"/><path d="M50 6c4 0 6 3 3 6" stroke="#7f8c5b" stroke-width="1.6" fill="none"/><ellipse cx="26" cy="50" rx="24" ry="32" fill="url(#pkA)"/><ellipse cx="74" cy="50" rx="24" ry="32" fill="url(#pkA)"/><ellipse cx="50" cy="50" rx="27" ry="36" fill="url(#pkA)"/><path d="M50 15v70M30 20c-8 15-8 45 0 60M70 20c8 15 8 45 0 60" stroke="#a0532a" stroke-width="1.2" fill="none" opacity=".4"/><ellipse cx="39" cy="46" rx="3.2" ry="4.4" fill="#3a2217"/><ellipse cx="61" cy="46" rx="3.2" ry="4.4" fill="#3a2217"/><circle cx="40.2" cy="44.6" r="1.1" fill="#fff"/><circle cx="62.2" cy="44.6" r="1.1" fill="#fff"/><path d="M44 55q6 5 12 0" stroke="#3a2217" stroke-width="2" fill="none" stroke-linecap="round"/><ellipse cx="32" cy="55" rx="5" ry="3" fill="#f2a08a" opacity=".55"/><ellipse cx="68" cy="55" rx="5" ry="3" fill="#f2a08a" opacity=".55"/><ellipse cx="38" cy="32" rx="5" ry="10" fill="#fff" opacity=".16"/></g>' +
+    '<g transform="translate(70 70)"><path d="M14 4c0-4 2-6 4-6" stroke="#5a3a1e" stroke-width="2.4" fill="none" stroke-linecap="round"/><ellipse cx="8" cy="18" rx="8" ry="12" fill="url(#pkC)"/><ellipse cx="24" cy="18" rx="8" ry="12" fill="url(#pkC)"/><ellipse cx="16" cy="18" rx="9" ry="14" fill="url(#pkC)"/></g></svg>',
+  ghost: '<svg viewBox="0 0 44 54"><path d="M22 2C11 2 4 11 4 22v26l5-4 5 4 5-4 6 4 5-4 5 4 5-4V22C40 11 33 2 22 2z" fill="#fbf8f2" stroke="#e2d6c4" stroke-width="1.2"/><ellipse cx="16" cy="22" rx="2.4" ry="3.2" fill="#3a2217"/><ellipse cx="28" cy="22" rx="2.4" ry="3.2" fill="#3a2217"/><circle cx="16.8" cy="21" r=".9" fill="#fff"/><circle cx="28.8" cy="21" r=".9" fill="#fff"/><ellipse cx="12" cy="28" rx="3" ry="1.8" fill="#f2a08a" opacity=".6"/><ellipse cx="32" cy="28" rx="3" ry="1.8" fill="#f2a08a" opacity=".6"/><ellipse cx="22" cy="29" rx="2" ry="1.5" fill="#3a2217"/></svg>',
+  bat: '<svg viewBox="0 0 40 20"><path d="M20 6c-1.5-3-3-3-3-3l-.6 2.4C14 3 10 2 6 4c2 1 2.6 3 2 5C5.6 8 2.6 9 0 11c4 0 6 1.4 7.4 3.6 1.4-2 3.6-2.6 5.6-1.8.8 2 2.6 3.4 7 4.4 4.4-1 6.2-2.4 7-4.4 2-.8 4.2-.2 5.6 1.8C34 12.4 36 11 40 11c-2.6-2-5.6-3-8-2-.6-2 0-4 2-5-4-2-8-1-10.4 1.4L23 3s-1.5 0-3 3z" fill="#3a2217"/></svg>',
+  leaf: function(c){ return '<svg viewBox="0 0 24 26"><path d="M12 1l2.2 4.6 4-1.6-1 4.2 4.3.4-3.2 3 2.2 3.4-4.4-.6.6 4.6L13 16.8V25h-2v-8.2l-3.7 2.2.6-4.6-4.4.6 2.2-3.4-3.2-3 4.3-.4-1-4.2 4 1.6z" fill="' + c + '"/><path d="M12 6v18" stroke="#000" stroke-opacity=".18" stroke-width=".8"/></svg>'; },
+  acorn: '<svg viewBox="0 0 20 28"><path d="M10 1v4" stroke="#5a3a1e" stroke-width="2" stroke-linecap="round"/><ellipse cx="10" cy="18" rx="7" ry="9" fill="#b98250"/><ellipse cx="8" cy="16" rx="2" ry="4" fill="#fff" opacity=".18"/><path d="M1.5 11c0-5 4-7 8.5-7s8.5 2 8.5 7c-3 1.6-14 1.6-17 0z" fill="#6b4330"/><path d="M4 8h12M3 10.5h14" stroke="#4e2f20" stroke-width=".7" opacity=".6"/></svg>',
+  holly: '<svg viewBox="0 0 70 40"><path d="M35 22C27 9 13 6 3 12c6 1 5 5 9 7-5 3 2 6 3 9 7-5 13-5 20-6z" fill="#4f6b45"/><path d="M35 22c8-13 22-16 32-10-6 1-5 5-9 7 5 3-2 6-3 9-7-5-13-5-20-6z" fill="#5d7a51"/><path d="M35 22C27 15 18 12 8 13M35 22c8-7 17-10 27-9" stroke="#3b5234" stroke-width=".8" fill="none"/><circle cx="31" cy="21" r="4.6" fill="#a83a35"/><circle cx="39" cy="21" r="4.6" fill="#b8443d"/><circle cx="35" cy="15" r="4.6" fill="#c24e44"/><circle cx="33.4" cy="13.6" r="1.3" fill="#fff" opacity=".6"/></svg>',
+  ornaments: '<svg viewBox="0 0 90 60"><g><path d="M20 0v14" stroke="#b9a497" stroke-width="1"/><rect x="16" y="13" width="8" height="5" rx="1" fill="#c9a447"/><circle cx="20" cy="30" r="13" fill="#a83a35"/><path d="M8 28q12 6 24 0" stroke="#e8d3a0" stroke-width="1.4" fill="none"/><ellipse cx="15" cy="24" rx="3" ry="5" fill="#fff" opacity=".25"/></g><g><path d="M52 0v22" stroke="#b9a497" stroke-width="1"/><rect x="48" y="21" width="8" height="5" rx="1" fill="#c9a447"/><circle cx="52" cy="37" r="11" fill="#4f6b45"/><circle cx="48" cy="33" r="2.4" fill="#fff" opacity=".3"/></g><g><path d="M76 0v8" stroke="#b9a497" stroke-width="1"/><rect x="72.5" y="7" width="7" height="4" rx="1" fill="#c9a447"/><circle cx="76" cy="20" r="9.5" fill="#c9a447"/><path d="M67 20h18" stroke="#fff" stroke-width="1" opacity=".5"/></g></svg>',
+  snow: '<svg viewBox="0 0 20 20"><g stroke="#fff" stroke-width="1.6" stroke-linecap="round"><path d="M10 1v18M1 10h18M3.6 3.6l12.8 12.8M16.4 3.6L3.6 16.4"/></g></svg>'
+};
+function el(cls, html, css){ var d = document.createElement('div'); d.className = cls; if (html) d.innerHTML = html; for (var k in css) d.style.setProperty(k, css[k]); return d; }
+function rnd(a, b){ return a + Math.random() * (b - a); }
+function applySeason(m){
+  var on = !!(S.data && S.data.settings && S.data.settings.seasonalThemes !== false);
+  var key = on ? (SEASON_BY_MONTH[m] || '') : '';
+  if (document.body.getAttribute('data-season') === key && S.seasonBuilt) return;
+  document.body.setAttribute('data-season', key);
+  S.seasonBuilt = true;
+  buildDecor(key);
+}
+function buildDecor(key){
+  var bg = $('#decor'), fr = $('#frameDecor');
+  if (!bg || !fr) return;
+  bg.innerHTML = ''; fr.innerHTML = '';
+  if (!key) return;
+  var W = fr.offsetWidth || 360;
+  var small = W < 420;
+  if (key === 'oct') {
+    fr.appendChild(el('s-in', '<div class="sway">' + ART.pumpkins + '</div>', { left: '-16px', bottom: '-26px', width: (W * 0.42) + 'px', 'animation-delay': '.9s' }));
+    var gx = W / 2 + (W / 2) * Math.cos(-Math.PI / 4) - 18, gy = W / 2 - (W / 2) * Math.sin(Math.PI / 4) - 34;
+    fr.appendChild(el('s-in', '<div class="bob">' + ART.ghost + '</div>', { left: gx + 'px', top: gy + 'px', width: (small ? 36 : 44) + 'px', 'animation-delay': '1.3s' }));
+    for (var i = 0; i < 4; i++) bg.appendChild(el('bat', '<div style="width:' + rnd(22, 34) + 'px;opacity:' + rnd(.35, .6) + '">' + ART.bat + '</div>', { '--y0': rnd(8, 60) + 'vh', 'animation-duration': rnd(16, 26) + 's', 'animation-delay': (-rnd(0, 20)) + 's' }));
+    var orange = ['#d0884f', '#c1693a', '#e2a46a'];
+    for (var j = 0; j < 10; j++) bg.appendChild(el('fall', '<div style="width:' + rnd(10, 16) + 'px;opacity:.55">' + ART.leaf(orange[j % 3]) + '</div>', { '--x0': rnd(0, 100) + 'vw', '--dx': rnd(-60, 60) + 'px', '--rot': rnd(-360, 360) + 'deg', 'animation-duration': rnd(14, 24) + 's', 'animation-delay': (-rnd(0, 24)) + 's' }));
+  }
+  if (key === 'nov') {
+    var cols = ['#b5652b', '#c98b3a', '#8a4b2a', '#a3542e', '#d1a04a'];
+    var cl = '<div style="position:relative;width:100%;height:100%">';
+    [[0, 30, 46, -25, 0], [30, 10, 40, 20, 1], [52, 34, 34, 60, 2], [8, 0, 30, -70, 3], [70, 22, 28, 10, 4]].forEach(function(p){ cl += '<div style="position:absolute;left:' + p[0] + '%;top:' + p[1] + '%;width:' + p[2] + '%;transform:rotate(' + p[3] + 'deg)">' + ART.leaf(cols[p[4]]) + '</div>'; });
+    cl += '<div style="position:absolute;left:34%;top:48%;width:16%;transform:rotate(-12deg)">' + ART.acorn + '</div><div style="position:absolute;left:50%;top:54%;width:13%;transform:rotate(18deg)">' + ART.acorn + '</div></div>';
+    fr.appendChild(el('s-in', '<div class="sway" style="width:100%;height:100%">' + cl + '</div>', { left: '-18px', bottom: '-22px', width: (W * 0.36) + 'px', height: (W * 0.3) + 'px', 'animation-delay': '.9s' }));
+    fr.appendChild(el('s-in', '<div class="sway" style="width:100%;height:100%;transform:scaleX(-1)">' + cl + '</div>', { right: '-18px', bottom: '-22px', width: (W * 0.3) + 'px', height: (W * 0.25) + 'px', 'animation-delay': '1.1s' }));
+    for (var k = 0; k < (small ? 12 : 18); k++) bg.appendChild(el('fall', '<div style="width:' + rnd(12, 22) + 'px;opacity:' + rnd(.5, .85) + '">' + ART.leaf(cols[k % cols.length]) + '</div>', { '--x0': rnd(0, 100) + 'vw', '--dx': rnd(-80, 80) + 'px', '--rot': rnd(-540, 540) + 'deg', 'animation-duration': rnd(11, 20) + 's', 'animation-delay': (-rnd(0, 20)) + 's' }));
+  }
+  if (key === 'dec') {
+    // twinkle lights following the arch curve
+    var r = W / 2 - 3, cx = W / 2, cy = W / 2, N = small ? 15 : 19;
+    var wire = '<svg viewBox="0 0 ' + W + ' ' + (W / 2 + 10) + '" style="width:' + W + 'px"><path d="';
+    for (var a = 0; a <= 60; a++) { var t = Math.PI + Math.PI * a / 60, sag = Math.sin(a / 60 * Math.PI * N) * 3; wire += (a ? 'L' : 'M') + (cx + (r + 2 + sag) * Math.cos(t)).toFixed(1) + ' ' + (cy + (r + 2 + sag) * Math.sin(t)).toFixed(1) + ' '; }
+    wire += '" fill="none" stroke="#3f4d38" stroke-width="1.6" opacity=".9"/></svg>';
+    fr.appendChild(el('wire s-in', wire, { 'animation-delay': '.8s' }));
+    var bulbs = ['#f3c86b', '#c9483e', '#7fa06a', '#f6e7c4'];
+    for (var b = 0; b < N; b++) {
+      var ang = Math.PI + Math.PI * (b + 0.5) / N;
+      var bx = cx + (r + 6) * Math.cos(ang), by = cy + (r + 6) * Math.sin(ang);
+      var d = el('bulb', '', { left: bx + 'px', top: by + 'px', color: bulbs[b % 4], transform: 'rotate(' + (ang * 180 / Math.PI + 90) + 'deg)', 'animation-delay': (b % 4) * 0.4 + 's' });
+      fr.appendChild(d);
+    }
+    fr.appendChild(el('s-in', ART.holly, { left: (W / 2 - (small ? 36 : 44)) + 'px', top: '-16px', width: (small ? 72 : 88) + 'px', 'animation-delay': '1.2s' }));
+    fr.appendChild(el('s-in', '<div class="sway">' + ART.ornaments + '</div>', { right: '-6px', bottom: '-34px', width: (W * 0.3) + 'px', 'animation-delay': '1s' }));
+    for (var f = 0; f < (small ? 26 : 40); f++) {
+      var flake = f % 5 === 0 ? '<div style="width:' + rnd(9, 13) + 'px;opacity:.85">' + ART.snow + '</div>' : '<div style="width:' + rnd(3, 6.5) + 'px;height:' + rnd(3, 6.5) + 'px;border-radius:50%;background:#fff;opacity:' + rnd(.55, .95) + ';box-shadow:0 0 4px rgba(255,255,255,.8)"></div>';
+      bg.appendChild(el('fall', flake, { '--x0': rnd(0, 100) + 'vw', '--dx': rnd(-40, 40) + 'px', '--rot': rnd(-180, 180) + 'deg', 'animation-duration': rnd(9, 18) + 's', 'animation-delay': (-rnd(0, 18)) + 's' }));
+    }
+  }
+}
+var seasonResize;
+window.addEventListener('resize', function(){ clearTimeout(seasonResize); seasonResize = setTimeout(function(){ var k = document.body.getAttribute('data-season'); if (k) buildDecor(k); }, 250); });
+
+/* ================================================================ BOOT */
+function stepMonth(isAdmin, dir){
+  var v = isAdmin ? S.adminView : S.view;
+  var n = { y: v.y, m: v.m + dir };
+  if (n.m < 0) { n.m = 11; n.y--; } if (n.m > 11) { n.m = 0; n.y++; }
+  var b = monthBounds(isAdmin ? adminCtx() : clientCtx());
+  if (mIndex(n) < mIndex(b.min) || mIndex(n) > mIndex(b.max)) return;
+  if (isAdmin) { S.adminView = n; renderAdmin(); } else { S.view = n; renderClient(); }
+}
+
+function bindCommon(){
+  $('#scrim').addEventListener('click', closeSheet);
+  $('#shClose').addEventListener('click', closeSheet);
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape' && sheetOpen()) closeSheet();
+    if ((e.key === 'Enter' || e.key === ' ') && e.target.classList && e.target.classList.contains('t')) { e.preventDefault(); e.target.click(); }
+  });
+  $('#sheet').addEventListener('click', function(e){
+    var cp = e.target.closest('[data-copy]'); if (cp) { copyText(cp.getAttribute('data-copy')); return; }
+    if (e.target.closest('#doneBtn')) { closeSheet(); return; }
+    if (S.mode === 'admin') return onAdminSheetClick(e);
+    onSheetClick(e);
+  });
+  $('#sheet').addEventListener('submit', function(e){
+    if (e.target.id === 'bookForm') submitBooking(e);
+    if (e.target.id === 'addForm') saveAddBooking(e);
+  });
+  // swipe down to close
+  var sy = null;
+  $('#sheet').addEventListener('touchstart', function(e){ sy = $('#sheet').scrollTop <= 0 ? e.touches[0].clientY : null; }, { passive: true });
+  $('#sheet').addEventListener('touchmove', function(e){ if (sy !== null && e.touches[0].clientY - sy > 110) { sy = null; closeSheet(); } }, { passive: true });
+  document.addEventListener('visibilitychange', function(){ if (!document.hidden) (S.mode === 'admin' ? adminPoll : refresh)(true); });
+  setInterval(tickLive, 5000);
+}
+function onAdminSheetClick(e){
+  var b;
+  if ((b = e.target.closest('[data-st]'))) {
+    var st = b.getAttribute('data-st'), id = b.getAttribute('data-id');
+    if (st === 'Cancelled' && b.getAttribute('data-sure') !== '1') { b.setAttribute('data-sure', '1'); b.textContent = 'Sure?'; return; }
+    b.disabled = true;
+    aapi('adminSetStatus', id, st).then(function(r){ if (!r.ok) { toast(r.error); b.disabled = false; return; } gotAdmin(r); toast('Marked ' + st.toLowerCase() + '.'); }).catch(function(err){ toast(err.message); b.disabled = false; });
+    return;
+  }
+  if ((b = e.target.closest('[data-rmtime]'))) {
+    var t = b.getAttribute('data-rmtime');
+    var list = timesFor(adminCtx(), S.sheetDate).filter(function(x){ return x !== t; });
+    setDayTimes(S.sheetDate, list); return;
+  }
+  if ((b = e.target.closest('[data-addfor]'))) { openAddBooking(S.sheetDate, b.getAttribute('data-addfor')); return; }
+  if (e.target.closest('#dayAddBtn')) {
+    var v = $('#dayAddT').value; if (!v) return toast('Pick a time first.');
+    var l2 = timesFor(adminCtx(), S.sheetDate); if (l2.indexOf(v) >= 0) return toast('That time is already there.');
+    setDayTimes(S.sheetDate, l2.concat([v]).sort()); return;
+  }
+  if ((b = e.target.closest('#dayOffBtn'))) {
+    var ctx = adminCtx();
+    var hasB = S.admin.bookings.some(function(x){ return x.date === S.sheetDate && x.status === 'Confirmed'; });
+    if (hasB) return toast('Cancel the bookings on this day first.');
+    if (b.getAttribute('data-sure') !== '1') { b.setAttribute('data-sure', '1'); b.textContent = 'Tap to confirm'; return; }
+    setDayTimes(S.sheetDate, []); return;
+  }
+  if (e.target.closest('#dayResetBtn')) { setDayTimes(S.sheetDate, null); return; }
+  if (e.target.closest('#dayAddBookBtn')) { openAddBooking(S.sheetDate, ''); return; }
+}
+async function adminPoll(force){
+  if (!S.pin || S.syncing || (!force && document.hidden)) return;
+  S.syncing = true;
+  try {
+    var r = await aapi('adminGetData');
+    if (r && r.ok) {
+      var old = {}; S.admin.bookings.forEach(function(b){ old[b.id] = b.status; });
+      r.bookings.forEach(function(b){ if (!old[b.id] && b.status === 'Confirmed') { S.fresh[b.date + ' ' + b.time] = true; toast('New booking: ' + b.client + ' · ' + shortDate(b.date) + ' ' + lab(b.time)); } });
+      if (S.sheetMode === 'admin-add') { S.admin = r; S.lastSync = Date.now(); setLive(true); }
+      else gotAdmin(r);
+    }
+  } catch (e) { setLive(false); }
+  finally { S.syncing = false; }
+}
+
+function startClient(){
+  $('#client').hidden = false;
+  bindCommon();
+  $('#grid').addEventListener('click', onGridClick);
+  $('#prevM').addEventListener('click', function(){ stepMonth(false, -1); });
+  $('#nextM').addEventListener('click', function(){ stepMonth(false, 1); });
+  $('#findForm').addEventListener('submit', findBooking);
+  $('#sheet').addEventListener('input', function(e){ if (e.target.id === 'bName' || e.target.id === 'bIg') saveDraft(); });
+  var io = 'IntersectionObserver' in window ? new IntersectionObserver(function(es){ es.forEach(function(x){ if (x.isIntersecting) { x.target.classList.add('in'); io.unobserve(x.target); } }); }, { threshold: .12 }) : null;
+  $$('.reveal').forEach(function(el){ io ? io.observe(el) : el.classList.add('in'); });
+  function go(){ renderStatic(); renderClient(); setLive(true); }
+  if (S.data) { go(); if (!IN_GAS && !DEMO) refresh(true); }
+  else {
+    $('#grid').innerHTML = '<div class="loading-msg">Loading availability<span class="dots"><i>.</i><i>.</i><i>.</i></span></div>';
+    var tries = 0;
+    (function load(){ refresh(true).then(function(){ if (!S.data) { if (++tries < 3) setTimeout(load, 2500); else { $('#grid').innerHTML = '<div class="loading-msg">Couldn\u2019t load. Check your connection and refresh.</div>'; } } }); })();
+  }
+  setInterval(function(){ refresh(false); }, 12000);
+}
+function startAdmin(){
+  $('#admin').hidden = false;
+  bindCommon();
+  $('#backToSite').href = S.appUrl || '?';
+  $('#loginForm').addEventListener('submit', login);
+  $('#aGrid').addEventListener('click', onGridClick);
+  $('#aPrev').addEventListener('click', function(){ stepMonth(true, -1); });
+  $('#aNext').addEventListener('click', function(){ stepMonth(true, 1); });
+  $$('.tab').forEach(function(t){ t.addEventListener('click', function(){
+    S.tab = t.getAttribute('data-tab');
+    $$('.tab').forEach(function(x){ x.classList.toggle('on', x === t); });
+    $$('[data-pane]').forEach(function(p){ p.hidden = p.getAttribute('data-pane') !== S.tab; });
+    if (S.tab === 'set') { S.draft = JSON.parse(JSON.stringify(S.admin.settings)); renderSettings(); }
+  }); });
+  $('#showPastBtn').addEventListener('click', function(){ S.showPast = !S.showPast; renderApptList(); });
+  $('#addApptBtn').addEventListener('click', function(){ openAddBooking('', ''); });
+  $('#apptList').addEventListener('click', onAdminSheetClick);
+  $('#setPanel').addEventListener('input', onSettingsInput);
+  $('#setPanel').addEventListener('change', onSettingsInput);
+  $('#setPanel').addEventListener('click', onSettingsClick);
+  var saved = null; try { saved = sessionStorage.getItem('nail_owner_pin'); } catch (e) {}
+  if (saved) { $('#pinIn').value = saved; login({ preventDefault: function(){} }); }
+  else setTimeout(function(){ $('#pinIn').focus(); }, 300);
+  setInterval(function(){ adminPoll(false); }, 15000);
+}
+
+function demoApi(fn, args){
+  return new Promise(function(res){ setTimeout(function(){
+    if (fn === 'getPublicData') return res(S.data);
+    if (fn === 'createBooking') {
+      var p = args[0], svcs = (S.data.settings.services || []).filter(function(x){ return (p.serviceIds || []).indexOf(x.id) >= 0; });
+      if (S.data.booked.some(function(b){ return b.date === p.date && b.time === p.time; })) return res({ ok: false, code: 'TAKEN', error: 'Someone just booked that time. Please pick another.' });
+      return res({ ok: true, booking: { code: 'PREVIEW', status: 'Confirmed', date: p.date, time: p.time, service: svcs.map(function(x){ return x.name; }).join(' + '), price: priceTotal(svcs), client: p.name } });
+    }
+    res({ ok: false, error: 'Preview only. This works on the live link.' });
+  }, 350); });
+}
+if (DEMO) setTimeout(function(){ var l = document.getElementById('liveTxt'); if (l) l.textContent = 'Preview'; S.online = true; }, 50);
+if (S.mode === 'admin') startAdmin(); else startClient();
+})();
+</script>
+</body>
+</html>
