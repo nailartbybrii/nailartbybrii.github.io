@@ -304,6 +304,25 @@ footer .own{display:block;margin-top:22px;font-size:10px;letter-spacing:.3em;tex
 .menu-hint{text-align:center;font-size:11px;letter-spacing:.08em;color:var(--muted);margin:-8px 0 14px}
 @keyframes bump{0%{transform:scale(1)}40%{transform:scale(1.12)}100%{transform:scale(1)}}
 
+/* ---------- nail shape + inspo photos ---------- */
+.shapes{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:18px}
+.shape{display:flex;flex-direction:column;align-items:center;gap:6px;padding:12px 4px 10px;border:1px solid var(--line);border-radius:16px;background:rgba(255,255,255,.3);font-size:11px;letter-spacing:.08em;color:var(--ink-2);transition:all .25s var(--ease)}
+.shape svg{width:22px;height:32px;transition:transform .3s var(--ease)}
+.shape svg path{fill:var(--paper-2);stroke:var(--ink-2);stroke-width:1.2}
+.shape.on{background:var(--choc);border-color:var(--choc);color:var(--cream);box-shadow:0 10px 20px -12px rgba(44,25,17,.8)}
+.shape.on svg{transform:translateY(-2px) scale(1.06)}
+.shape.on svg path{fill:#d9b8a8;stroke:var(--cream)}
+.inspo{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:6px}
+.ph{position:relative;width:78px;height:78px;border-radius:14px;background:var(--paper-2) center/cover no-repeat;box-shadow:0 0 0 1px rgba(44,25,17,.15), 0 8px 16px -10px rgba(44,25,17,.6);animation:seasonIn .5s var(--ease) both}
+.ph button{position:absolute;top:-7px;right:-7px;width:24px;height:24px;border-radius:50%;background:var(--choc);color:var(--cream);font-size:14px;line-height:1;display:grid;place-items:center;box-shadow:0 2px 6px rgba(0,0,0,.3)}
+.ph.busy{display:grid;place-items:center}
+.ph.busy::after{content:"";width:18px;height:18px;border-radius:50%;border:1.5px solid var(--ink-2);border-right-color:transparent;animation:spin .8s linear infinite}
+.add-ph{width:78px;height:78px;border-radius:14px;border:1px dashed var(--line);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;color:var(--ink-2);font-size:10px;letter-spacing:.14em;text-transform:uppercase;background:rgba(255,255,255,.3);transition:all .25s var(--ease)}
+.add-ph:hover{border-color:var(--choc);background:rgba(255,255,255,.55)}
+.add-ph b{font-family:var(--serif);font-size:26px;font-weight:400;line-height:1;letter-spacing:0}
+.inspo-hint{font-size:11px;color:var(--muted);margin:0 0 18px;line-height:1.5}
+.file-in{position:absolute;width:1px;height:1px;opacity:0;overflow:hidden}
+
 /* ---------- seasonal themes ---------- */
 #client{position:relative;z-index:1}
 #client .frame{z-index:2}
@@ -560,7 +579,7 @@ function demoData(){
       weeklySlots: { 0: ['09:00','12:00','15:00','18:30'], 1: ['18:00'], 2: ['18:00'], 3: ['18:00'], 4: ['18:00'], 5: ['18:00'], 6: ['09:00','12:00','15:00','18:30'] },
       appointmentMinutes: 120, minNoticeHours: 12, maxDaysOut: 60, cancelHours: 24,
       services: [{ id: 'gelx', name: 'Gel-X Full Set', price: '$45' }, { id: 'acrylic', name: 'Acrylic Full Set', price: '$50' }, { id: 'fill', name: 'Acrylic Fill', price: '$35' }, { id: 'gelmani', name: 'Gel Manicure', price: '$30' }, { id: 'art', name: 'Nail Art Add-on', price: 'from $10' }],
-      seasonalThemes: true,
+      seasonalThemes: true, shapes: ['Square', 'Coffin', 'Stiletto', 'Almond'],
       policies: ['Please arrive with bare nails or book a soak-off.', 'More than 10 minutes late may mean a shortened design or reschedule.', 'Please cancel at least 24 hours ahead so someone else can take the spot.'],
       updatedAt: 1 }
   };
@@ -766,6 +785,11 @@ function openDay(ymd, preTime){
   S.sel.serviceIds = S.sel.serviceIds.filter(function(id){ return (s.services || []).some(function(x){ return x.id === id; }); });
   if (!S.sel.serviceIds.length && s.services && s.services.length === 1) S.sel.serviceIds = [s.services[0].id];
   var d = new Date(dayNum(ymd) * 864e5);
+  if (!S.sel.photos) S.sel.photos = [];
+  var shapes = (s.shapes || []).map(function(x){
+    var on = S.sel.shape === x;
+    return '<button type="button" class="shape' + (on ? ' on' : '') + '" data-shape="' + esc(x) + '" aria-pressed="' + on + '">' + shapeIcon(x) + '<span>' + esc(x) + '</span></button>';
+  }).join('');
   var svc = (s.services || []).map(function(x){
     var on = S.sel.serviceIds.indexOf(x.id) >= 0;
     return '<button type="button" class="chip' + (on ? ' on' : '') + '" data-svc="' + esc(x.id) + '" aria-pressed="' + on + '"><span class="tick">' + (on ? '✓' : '') + '</span>' + esc(x.name) + (x.price ? ' <b>' + esc(x.price) + '</b>' : '') + '</button>';
@@ -779,9 +803,13 @@ function openDay(ymd, preTime){
       '<form id="bookForm" autocomplete="on" novalidate>' +
         (svc ? '<span class="field"><span class="lb">Services · tap all that apply</span></span><div class="chips" id="svcChips">' + svc + '</div>' +
           '<div class="svc-total" id="svcTotal"><span id="svcCount">Nothing selected yet</span><b id="svcSum"></b></div>' : '') +
+        (shapes ? '<span class="field"><span class="lb">Nail shape · pick one</span></span><div class="shapes" id="shapeChips">' + shapes + '</div>' : '') +
         '<label class="field"><span class="lb">Full name</span><input id="bName" name="name" autocomplete="name" maxlength="60" required></label>' +
         '<label class="field"><span class="lb">Instagram handle</span><input id="bIg" name="ig" autocapitalize="none" autocorrect="off" spellcheck="false" placeholder="@yourhandle" maxlength="40" required></label>' +
-        '<label class="field"><span class="lb">Notes · shape, length, inspo</span><textarea id="bNotes" maxlength="400" rows="2"></textarea></label>' +
+        '<span class="field"><span class="lb">Inspo photos · up to 3 (optional)</span></span>' +
+        '<div class="inspo" id="inspoBox"></div>' +
+        '<p class="inspo-hint">Screenshots from Instagram or Pinterest are perfect.</p>' +
+        '<label class="field"><span class="lb">Notes · length, colors, details</span><textarea id="bNotes" maxlength="400" rows="2"></textarea></label>' +
         '<input class="hp" id="bWeb" tabindex="-1" autocomplete="off" aria-hidden="true">' +
         '<button class="btn dark block" type="submit" id="bookBtn">Reserve</button>' +
         '<p class="fine">You’ll get a booking code to look up or cancel your appointment.</p>' +
@@ -789,8 +817,53 @@ function openDay(ymd, preTime){
     '</div>';
   renderDayPills();
   updateTotal(false);
+  renderPhotos();
   openSheet();
   restoreDraft();
+}
+function shapeIcon(name){
+  var paths = {
+    square: 'M5 33V8.5Q5 5 8.5 5h7Q19 5 19 8.5V33z',
+    coffin: 'M5 33L8.2 4.5h7.6L19 33z',
+    stiletto: 'M5 33C5 21 8.5 11 12 1.5 15.5 11 19 21 19 33z',
+    almond: 'M5 33C5 17 7.2 4.5 12 4.5S19 17 19 33z'
+  };
+  var d = paths[String(name).toLowerCase()] || 'M5 33V12C5 7 8 4.5 12 4.5S19 7 19 12V33z';
+  return '<svg viewBox="0 0 24 34" aria-hidden="true"><path d="' + d + '"/></svg>';
+}
+function renderPhotos(){
+  var box = $('#inspoBox'); if (!box) return;
+  var html = S.sel.photos.map(function(p, i){ return p === 'busy' ? '<div class="ph busy"></div>' : '<div class="ph" style="background-image:url(' + p + ')"><button type="button" data-rmph="' + i + '" aria-label="Remove photo">×</button></div>'; }).join('');
+  if (S.sel.photos.length < 3) html += '<label class="add-ph"><input class="file-in" type="file" accept="image/*" multiple id="phIn"><b>+</b>Add photo</label>';
+  box.innerHTML = html;
+}
+function shrinkImage(file){
+  return new Promise(function(res, rej){
+    var url = URL.createObjectURL(file), img = new Image();
+    img.onload = function(){
+      var max = 1280, w = img.naturalWidth, h = img.naturalHeight, k = Math.min(1, max / Math.max(w, h));
+      w = Math.max(1, Math.round(w * k)); h = Math.max(1, Math.round(h * k));
+      var c = document.createElement('canvas'); c.width = w; c.height = h;
+      var g = c.getContext('2d'); g.fillStyle = '#fff'; g.fillRect(0, 0, w, h); g.drawImage(img, 0, 0, w, h);
+      URL.revokeObjectURL(url);
+      var q = 0.82, out = c.toDataURL('image/jpeg', q);
+      while (out.length > 1500000 && q > 0.4) { q -= 0.12; out = c.toDataURL('image/jpeg', q); }
+      res(out);
+    };
+    img.onerror = function(){ URL.revokeObjectURL(url); rej(new Error('unreadable')); };
+    img.src = url;
+  });
+}
+function addPhotos(files){
+  var room = 3 - S.sel.photos.length;
+  var list = Array.prototype.slice.call(files || []).filter(function(f){ return /^image\//.test(f.type) || /\.(jpe?g|png|heic|heif|webp)$/i.test(f.name); });
+  if (!list.length) return;
+  if (list.length > room) toast('You can add up to 3 photos. Using the first ' + room + '.');
+  list.slice(0, room).forEach(function(f){
+    var slot = S.sel.photos.length; S.sel.photos.push('busy'); renderPhotos();
+    shrinkImage(f).then(function(d){ S.sel.photos[slot] = d; renderPhotos(); })
+      .catch(function(){ S.sel.photos.splice(slot, 1); renderPhotos(); toast('That photo couldn\u2019t be read. Try a screenshot of it instead.'); });
+  });
 }
 function cleanIg(v){ return String(v || '').trim().replace(/^@+/, '').replace(/^https?:\/\/(www\.)?instagram\.com\//i, '').replace(/[\/?#].*$/, '').toLowerCase().slice(0, 30); }
 function priceTotal(list){
@@ -854,6 +927,15 @@ function restoreDraft(){
 function onSheetClick(e){
   var p = e.target.closest('[data-pick]');
   if (p && !p.disabled) { S.sel.time = p.getAttribute('data-pick'); renderDayPills(); setTimeout(function(){ var f = $('#svcChips') || $('#bName'); if (f) f.scrollIntoView({ behavior: 'smooth', block: 'center' }); }, 250); return; }
+  var sh = e.target.closest('[data-shape]');
+  if (sh) {
+    var v = sh.getAttribute('data-shape');
+    S.sel.shape = S.sel.shape === v ? '' : v;
+    $$('#shapeChips .shape').forEach(function(x){ var on = x.getAttribute('data-shape') === S.sel.shape; x.classList.toggle('on', on); x.setAttribute('aria-pressed', String(on)); });
+    return;
+  }
+  var rm = e.target.closest('[data-rmph]');
+  if (rm) { e.preventDefault(); S.sel.photos.splice(+rm.getAttribute('data-rmph'), 1); renderPhotos(); return; }
   var c = e.target.closest('[data-svc]');
   if (c) {
     var id = c.getAttribute('data-svc'), i = S.sel.serviceIds.indexOf(id);
@@ -874,9 +956,11 @@ async function submitBooking(e){
   if (name.length < 2) { $('#bName').focus(); return toast('Please add your name.'); }
   if (!/^[a-z0-9._]{1,30}$/.test(ig)) { $('#bIg').focus(); return toast('Please add your Instagram handle.'); }
   saveDraft();
-  var btn = $('#bookBtn'); btn.disabled = true; btn.innerHTML = '<span class="spin"></span> Reserving';
+  if (S.sel.photos.indexOf('busy') >= 0) return toast('One sec, your photos are still loading.');
+  var btn = $('#bookBtn'); btn.disabled = true; btn.innerHTML = '<span class="spin"></span> ' + (S.sel.photos.length ? 'Sending photos & reserving' : 'Reserving');
   var payload = { date: S.sheetDate, time: S.sel.time, serviceIds: S.sel.serviceIds.slice(), name: name,
-    instagram: ig, notes: $('#bNotes').value.trim(), website: $('#bWeb').value };
+    instagram: ig, notes: $('#bNotes').value.trim(), website: $('#bWeb').value, shape: S.sel.shape || '',
+    photos: S.sel.photos.map(function(d){ return { type: 'image/jpeg', data: d.split(',')[1] }; }) };
   try {
     var res = await api('createBooking', payload);
     if (!res || !res.ok) {
@@ -885,7 +969,7 @@ async function submitBooking(e){
       if (res && res.code === 'TAKEN') refresh(true);
       return;
     }
-    S.sheetMode = 'done'; S.sel.time = null;
+    S.sheetMode = 'done'; S.sel.time = null; S.sel.shape = ''; S.sel.photos = [];
     S.data.booked.push({ date: res.booking.date, time: res.booking.time });
     S.fresh[res.booking.date + ' ' + res.booking.time] = true;
     showConfirm(res.booking);
@@ -911,6 +995,8 @@ function showConfirm(b){
         '<div class="r"><span>When</span><b>' + esc(shortDate(b.date)) + ' · ' + lab(b.time) + '</b></div>' +
         (b.service ? '<div class="r"><span>Service</span><b style="text-align:right">' + esc(b.service) + '</b></div>' : '') +
         (b.price ? '<div class="r"><span>Est. total</span><b>' + esc(b.price) + '</b></div>' : '') +
+        (b.shape ? '<div class="r"><span>Shape</span><b>' + esc(b.shape) + '</b></div>' : '') +
+        (b.photosSent ? '<div class="r"><span>Inspo</span><b>' + (b.photosSaved === b.photosSent ? b.photosSaved + (b.photosSaved === 1 ? ' photo sent' : ' photos sent') : 'Please DM your inspo pics') + '</b></div>' : '') +
         '<div class="r"><span>Code</span><span class="code">' + esc(b.code) + '</span></div>' +
       '</div>' +
       '<div class="stack">' +
@@ -1051,6 +1137,8 @@ function apptCard(b, withDate){
     '<div class="meta">' +
       (b.phone ? '<a href="tel:' + esc(tel) + '">' + esc(b.phone) + '</a> · <a href="sms:' + esc(tel) + '">Text</a>' : '') +
       (b.instagram ? ' · <a target="_blank" rel="noopener" href="https://instagram.com/' + encodeURIComponent(b.instagram) + '">@' + esc(b.instagram) + '</a>' : '') +
+      (b.shape ? '<br>Shape: <b>' + esc(b.shape) + '</b>' : '') +
+      (b.inspo ? '<br>Inspo: ' + String(b.inspo).split(/\s+/).filter(function(u){ return /^https:\/\/(drive|docs)\.google\.com\//.test(u); }).map(function(u, i){ return '<a target="_blank" rel="noopener" href="' + esc(u) + '">Photo ' + (i + 1) + '</a>'; }).join(' · ') : '') +
       (b.notes ? '<br>“' + esc(b.notes) + '”' : '') +
       '<br><span style="color:var(--muted)">Code ' + esc(b.code) + ' · via ' + esc(b.source || 'Website') + '</span>' +
     '</div>' +
@@ -1115,6 +1203,7 @@ function openAddBooking(ymd, time){
       '<div class="row2"><label class="field"><span class="lb">Phone</span><input id="aP" type="tel" maxlength="25"></label>' +
       '<label class="field"><span class="lb">Instagram</span><input id="aI" maxlength="40" autocapitalize="none"></label></div>' +
       (s.services.length ? '<label class="field"><span class="lb">Service</span><select id="aS"><option value="">—</option>' + s.services.map(function(x){ return '<option value="' + esc(x.id) + '">' + esc(x.name) + ' · ' + esc(x.price) + '</option>'; }).join('') + '</select></label>' : '') +
+      ((s.shapes || []).length ? '<label class="field"><span class="lb">Nail shape</span><select id="aSh"><option value="">—</option>' + s.shapes.map(function(x){ return '<option>' + esc(x) + '</option>'; }).join('') + '</select></label>' : '') +
       '<label class="field"><span class="lb">Notes</span><input id="aNo" maxlength="400"></label>' +
       '<button class="btn dark block" type="submit" id="aSave">Save booking</button>' +
       '<p class="fine">Adds it to the calendar and crosses the time out for everyone instantly.</p>' +
@@ -1124,7 +1213,7 @@ function openAddBooking(ymd, time){
 async function saveAddBooking(e){
   e.preventDefault();
   var btn = $('#aSave'); btn.disabled = true; btn.innerHTML = '<span class="spin"></span> Saving';
-  var p = { date: $('#aD').value, time: $('#aT').value, name: $('#aN').value, phone: $('#aP').value, instagram: $('#aI').value, serviceIds: $('#aS') && $('#aS').value ? [$('#aS').value] : [], notes: $('#aNo').value };
+  var p = { date: $('#aD').value, time: $('#aT').value, name: $('#aN').value, phone: $('#aP').value, instagram: $('#aI').value, serviceIds: $('#aS') && $('#aS').value ? [$('#aS').value] : [], shape: $('#aSh') ? $('#aSh').value : '', notes: $('#aNo').value };
   var r = await aapi('adminAddBooking', p).catch(function(err){ return { ok: false, error: err.message || 'Connection problem.' }; });
   if (!r.ok) { btn.disabled = false; btn.textContent = 'Save booking'; toast(r.error); return; }
   S.fresh[p.date + ' ' + p.time] = true;
@@ -1398,6 +1487,7 @@ function startClient(){
   $('#nextM').addEventListener('click', function(){ stepMonth(false, 1); });
   $('#findForm').addEventListener('submit', findBooking);
   $('#sheet').addEventListener('input', function(e){ if (e.target.id === 'bName' || e.target.id === 'bIg') saveDraft(); });
+  $('#sheet').addEventListener('change', function(e){ if (e.target.id === 'phIn') { addPhotos(e.target.files); e.target.value = ''; } });
   var io = 'IntersectionObserver' in window ? new IntersectionObserver(function(es){ es.forEach(function(x){ if (x.isIntersecting) { x.target.classList.add('in'); io.unobserve(x.target); } }); }, { threshold: .12 }) : null;
   $$('.reveal').forEach(function(el){ io ? io.observe(el) : el.classList.add('in'); });
   function go(){ renderStatic(); renderClient(); setLive(true); }
@@ -1441,7 +1531,7 @@ function demoApi(fn, args){
     if (fn === 'createBooking') {
       var p = args[0], svcs = (S.data.settings.services || []).filter(function(x){ return (p.serviceIds || []).indexOf(x.id) >= 0; });
       if (S.data.booked.some(function(b){ return b.date === p.date && b.time === p.time; })) return res({ ok: false, code: 'TAKEN', error: 'Someone just booked that time. Please pick another.' });
-      return res({ ok: true, booking: { code: 'PREVIEW', status: 'Confirmed', date: p.date, time: p.time, service: svcs.map(function(x){ return x.name; }).join(' + '), price: priceTotal(svcs), client: p.name } });
+      return res({ ok: true, booking: { code: 'PREVIEW', status: 'Confirmed', date: p.date, time: p.time, service: svcs.map(function(x){ return x.name; }).join(' + '), price: priceTotal(svcs), client: p.name, shape: p.shape || '', photosSent: (p.photos || []).length, photosSaved: (p.photos || []).length } });
     }
     res({ ok: false, error: 'Preview only. This works on the live link.' });
   }, 350); });
